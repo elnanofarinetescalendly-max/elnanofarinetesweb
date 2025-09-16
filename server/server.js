@@ -116,6 +116,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serveix la carpeta d'administració
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
+app.get('/', (req, res) => {
+  res.send('API en marxa ✅');
+});
+
+app.get('/healthz', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+
 
 app.listen(PORT, () => {
     console.log(`Servidor actiu a https://elnanofarinetes-server.onrender.com:${PORT}`);
@@ -136,11 +144,5 @@ app.put('/api/tallers/:id', (req, res) => {
 
     res.json(tallers[index]);
 });
-app.get('/', (req, res) => {
-  res.send('API en marxa ✅');
-});
 
-app.get('/healthz', (req, res) => {
-  res.json({ ok: true, time: new Date().toISOString() });
-});
 
