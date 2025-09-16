@@ -136,4 +136,11 @@ app.put('/api/tallers/:id', (req, res) => {
 
     res.json(tallers[index]);
 });
+app.get('/', (req, res) => {
+  res.send('API en marxa ✅');
+});
+
+app.get('/healthz', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
 
