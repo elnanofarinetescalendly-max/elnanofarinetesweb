@@ -95,8 +95,8 @@ app.delete('/api/tallers/:id', autentificat, (req, res) => {
 });
 
 // Estàtics (public/admin són germanes de server → fem ..)
-app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
+  // app.use(express.static(path.join(__dirname, '..', 'public')));
+  // app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
 
 // 404
 app.use((req, res) => {
