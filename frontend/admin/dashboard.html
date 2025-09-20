@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Panell d'Administració</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f6f1e7; }
+      nav ul {
+          list-style: none;
+          padding: 0;
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+      }
+
+          nav ul li a {
+              text-decoration: none;
+              background-color: #444;
+              color: white;
+              padding: 0.5rem 1rem;
+              border-radius: 4px;
+          }
+
+              nav ul li a:hover {
+                  background-color: #666;
+              }
+    h1 { color: #3e2f1c; }
+    form { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    input, textarea { display: block; margin-bottom: 1rem; width: 100%; padding: 0.5rem; }
+    button { padding: 0.5rem 1rem; background-color: #7c5e3c; color: white; border: none; border-radius: 5px; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Crear tallers</a></li>
+            <li><a href="inscrits.html">Gestió d'inscrits</a></li>
+        </ul>
+    </nav>
+    <h1>Panell d'Administració</h1>
+
+    <h2>Afegir un nou taller</h2>
+    <form id="tallerForm">
+        <input type="text" id="titol" placeholder="Títol del taller" required />
+        <textarea id="descripcio" placeholder="Descripció" required></textarea>
+        <input type="date" id="data" required />
+        <input type="number" id="places" placeholder="Places disponibles" required />
+        <input type="url" id="reserva" placeholder="Enllaç de reserva (opcional)" />
+        <button type="submit">Afegir taller</button>
+    </form>
+
+    <h2>Llista de tallers</h2>
+    <ul id="llistaTallers"></ul>
+
+    <script>
+        // Comprovació de sessió: si no estàs loguejat, et redirigeix al login
+        fetch('https://elnanofarinetes-server.onrender.com/api/session', {
+            credentials: 'include'
+        }).then(res => {
+            if (!res.ok) {
+                window.location.href = '/admin/login.html';
+            }
+        });
+
+        async function carregarTallers() {
+            const res = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers', { credentials: 'include' });
+            const tallers = await res.json();
+            const llista = document.getElementById('llistaTallers');
+            llista.innerHTML = '';
+            tallers.forEach(taller => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${taller.titol}</strong> - ${taller.data} <button onclick="eliminarTaller(${taller.id})">❌</button>`;
+                llista.appendChild(li);
+            });
+        }
+
+        async function eliminarTaller(id) {
+            await fetch('https://elnanofarinetes-server.onrender.com/api/tallers/' + id, { method: 'DELETE', credentials: 'include' });
+            carregarTallers();
+        }
+
+        document.getElementById('tallerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const titol = document.getElementById('titol').value;
+            const descripcio = document.getElementById('descripcio').value;
+            const data = document.getElementById('data').value;
+            const places = parseInt(document.getElementById('places').value);
+            const enllacReserva = document.getElementById('reserva').value;
+
+            const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    titol,
+                    descripcio,
+                    data,
+                    placesDisponibles: places,
+                    enllacReserva
+                })
+            });
+
+            e.target.reset();
+            carregarTallers();
+        });
+
+        carregarTallers();
+        async function logout() {
+            await fetch('https://elnanofarinetes-server.onrender.com/api/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            window.location.href = '/admin/login.html';
+        }
+
+    </script>
+    <button onclick="logout()">Tancar sessió</button>
+
+</body>
+</html>

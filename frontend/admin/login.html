@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Admin</title>
+</head>
+<body>
+    <h1>Accés Admin</h1>
+    <form id="loginForm">
+        <input type="text" id="usuari" placeholder="Usuari" required />
+        <input type="password" id="contrasenya" placeholder="Contrasenya" required />
+        <button type="submit">Entrar</button>
+    </form>
+    <p id="missatge"></p>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuari = document.getElementById('usuari').value;
+            const contrasenya = document.getElementById('contrasenya').value;
+
+            const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuari, contrasenya })
+            });
+
+            if (resposta.ok) {
+                window.location.href = '/admin/dashboard.html'; // o el camí del teu panell
+            } else {
+                const dades = await resposta.json();
+                document.getElementById('missatge').textContent = dades.missatge;
+            }
+        });
+    </script>
+
+</body>
+</html>
