@@ -12,7 +12,7 @@ const TALLERS_PATH = path.join(__dirname, 'tallers.json');
 
 // CORS (durant proves permet qualsevol origen). Després limita-ho al domini del teu frontend.
 app.use(cors({ 
-  origin: ['https://elnanofarinetes.vercel.app'], 
+  origin: ['https://elnanofarinetesweb.vercel.app'], 
   credentials: true }));
 
 app.use(express.json());
