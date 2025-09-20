@@ -108,6 +108,36 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Servidor actiu al port ${PORT}`));
+// 📩 Webhook de Calendly
+app.post('/api/webhook/calendly', (req, res) => {
+    try {
+        const event = req.body;
+
+        console.log("Webhook rebut:", JSON.stringify(event, null, 2));
+
+        // Exemple: quan hi ha un event "invitee.created"
+        if (event.event === "invitee.created") {
+            const email = event.payload.email;
+            const nom = event.payload.name;
+            const eventUri = event.payload.event;
+
+            // Aquí has de tenir alguna manera de mapejar l'event de Calendly → id del taller
+            // Exemple simple: buscar per titol si coincideix amb eventUri o notes
+            const index = tallers.findIndex(t => eventUri.includes(t.titol));
+            if (index !== -1 && tallers[index].placesDisponibles > 0) {
+                tallers[index].placesDisponibles--;
+                if (!tallers[index].inscrits) tallers[index].inscrits = [];
+                tallers[index].inscrits.push(nom || email);
+                desaTallers(tallers);
+            }
+        }
+
+        res.status(200).json({ ok: true });
+    } catch (err) {
+        console.error("Error webhook:", err);
+        res.status(500).json({ error: "Error processant webhook" });
+    }
+});
 
 
 
