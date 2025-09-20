@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 3000;
 const TALLERS_PATH = path.join(__dirname, 'tallers.json');
 
 // CORS (durant proves permet qualsevol origen). Després limita-ho al domini del teu frontend.
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ 
+  origin: ['https://elnanofarinetes.vercel.app'], 
+  credentials: true }));
+
 app.use(express.json());
 
 // Sessió (cookies cross-site)
