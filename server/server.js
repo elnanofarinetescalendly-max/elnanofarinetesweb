@@ -180,6 +180,12 @@ async function syncCalendly() {
     console.error("❌ Error sincronitzant amb Calendly:", err);
   }
 }
+// Executa cada 5 minuts
+setInterval(syncCalendly, 5 * 60 * 1000);
+
+// Opcional: sincronitzar un cop en arrencar
+syncCalendly();
+
 
 
 
