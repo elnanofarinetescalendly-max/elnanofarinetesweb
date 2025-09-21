@@ -138,7 +138,6 @@ app.post('/api/webhook/calendly', (req, res) => {
         res.status(500).json({ error: "Error processant webhook" });
     }
 });
-const fetch = require("node-fetch");
 
 const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN; // 👈 posa’l a Render com a secret
 const ORGANIZATION = "https://api.calendly.com/scheduled_events?organization=https://api.calendly.com/organizations/361ec01e-2b96-429b-9a42-bf29871ac073"; // 👈 el teu
