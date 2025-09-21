@@ -138,6 +138,49 @@ app.post('/api/webhook/calendly', (req, res) => {
         res.status(500).json({ error: "Error processant webhook" });
     }
 });
+const fetch = require("node-fetch");
+
+const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN; // 👈 posa’l a Render com a secret
+const ORGANIZATION = "https://api.calendly.com/organizations/3XXXXXXXXXXXX"; // 👈 el teu
+
+async function syncCalendly() {
+  try {
+    const res = await fetch(`https://api.calendly.com/scheduled_events?organization=${encodeURIComponent(ORGANIZATION)}`, {
+      headers: {
+        "Authorization": `Bearer ${CALENDLY_TOKEN}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    const data = await res.json();
+
+    if (data.collection) {
+      console.log("📅 Esdeveniments de Calendly trobats:", data.collection.length);
+
+      data.collection.forEach(ev => {
+        const titol = ev.name;
+        const dataEv = ev.start_time.split("T")[0];
+
+        // Buscar si existeix al JSON de tallers
+        const index = tallers.findIndex(t => t.titol === titol && t.data === dataEv);
+        if (index !== -1) {
+          // 👇 Exemple: marcar que almenys hi ha una reserva
+          tallers[index].inscrits = tallers[index].inscrits || [];
+          if (!tallers[index].inscrits.includes("Calendly")) {
+            tallers[index].inscrits.push("Calendly");
+            if (tallers[index].placesDisponibles > 0) {
+              tallers[index].placesDisponibles--;
+            }
+            desaTallers(tallers);
+          }
+        }
+      });
+    }
+  } catch (err) {
+    console.error("❌ Error sincronitzant amb Calendly:", err);
+  }
+}
+
 
 
 
