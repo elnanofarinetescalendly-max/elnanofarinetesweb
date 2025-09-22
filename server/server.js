@@ -124,7 +124,7 @@ app.post('/api/webhook/calendly', (req, res) => {
 
             // Aquí has de tenir alguna manera de mapejar l'event de Calendly → id del taller
             // Exemple simple: buscar per titol si coincideix amb eventUri o notes
-            const index = tallers.findIndex(t => eventUri.includes(t.titol));
+            const index = tallers.findIndex(t => t.calendlyUri === ev.uri);
             if (index !== -1 && tallers[index].placesDisponibles > 0) {
                 tallers[index].placesDisponibles--;
                 if (!tallers[index].inscrits) tallers[index].inscrits = [];
