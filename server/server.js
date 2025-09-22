@@ -111,34 +111,41 @@ app.use((req, res) => {
 app.listen(PORT, () => console.log(`Servidor actiu al port ${PORT}`));
 // 📩 Webhook de Calendly
 app.post('/api/webhook/calendly', (req, res) => {
-    try {
-        const event = req.body;
+  try {
+    const event = req.body;
+    console.log("Webhook rebut:", JSON.stringify(event, null, 2));
 
-        console.log("Webhook rebut:", JSON.stringify(event, null, 2));
+    if (event.event === "invitee.created") {
+      const eventUri = event.payload.event; // URI de l'esdeveniment de Calendly
+      const nom = event.payload.name || event.payload.email;
 
-        // Exemple: quan hi ha un event "invitee.created"
-        if (event.event === "invitee.created") {
-            const email = event.payload.email;
-            const nom = event.payload.name;
-            const eventUri = event.payload.event;
-
-            // Aquí has de tenir alguna manera de mapejar l'event de Calendly → id del taller
-            // Exemple simple: buscar per titol si coincideix amb eventUri o notes
-            const index = tallers.findIndex(t => t.calendlyUri === ev.uri);
-            if (index !== -1 && tallers[index].placesDisponibles > 0) {
-                tallers[index].placesDisponibles--;
-                if (!tallers[index].inscrits) tallers[index].inscrits = [];
-                tallers[index].inscrits.push(nom || email);
-                desaTallers(tallers);
-            }
-        }
-
-        res.status(200).json({ ok: true });
-    } catch (err) {
-        console.error("Error webhook:", err);
-        res.status(500).json({ error: "Error processant webhook" });
+      const index = tallers.findIndex(t => t.calendlyUri === eventUri);
+      if (index !== -1 && tallers[index].placesDisponibles > 0) {
+        tallers[index].placesDisponibles--;
+        tallers[index].inscrits.push(nom);
+        desaTallers(tallers);
+      }
     }
+
+    if (event.event === "invitee.canceled") {
+      const eventUri = event.payload.event;
+      const email = event.payload.email;
+
+      const index = tallers.findIndex(t => t.calendlyUri === eventUri);
+      if (index !== -1) {
+        tallers[index].placesDisponibles++;
+        tallers[index].inscrits = tallers[index].inscrits.filter(i => i !== email);
+        desaTallers(tallers);
+      }
+    }
+
+    res.status(200).json({ ok: true });
+  } catch (err) {
+    console.error("Error webhook:", err);
+    res.status(500).json({ error: "Error processant webhook" });
+  }
 });
+
 
 const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN; // 👈 posa’l a Render com a secret
 const ORGANIZATION = "https://api.calendly.com/scheduled_events?organization=https://api.calendly.com/organizations/361ec01e-2b96-429b-9a42-bf29871ac073"; // 👈 el teu
