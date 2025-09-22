@@ -64,12 +64,13 @@ app.get('/api/session', (req, res) => res.status(req.session?.autenticat ? 200 :
 // API tallers
 app.get('/api/tallers', (_req, res) => res.json(tallers));
 app.post('/api/tallers', autentificat, (req, res) => {
-  const { titol, descripcio, data, placesDisponibles, enllacReserva } = req.body || {};
+  const { titol, descripcio, data, placesDisponibles, enllacReserva, calendlyUri } = req.body || {};
   const nou = {
     id: Date.now(),
     titol, descripcio, data,
     placesDisponibles: parseInt(placesDisponibles) || 0,
     enllacReserva: enllacReserva || '',
+    calendlyUri: calendlyUri || null,
     inscrits: []
   };
   tallers.push(nou); desaTallers(tallers);
