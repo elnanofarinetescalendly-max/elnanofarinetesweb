@@ -162,7 +162,7 @@ async function syncCalendly() {
         const dataEv = ev.start_time.split("T")[0];
 
         // Buscar si existeix al JSON de tallers
-        const index = tallers.findIndex(t => t.titol === titol && t.data === dataEv);
+        const index = tallers.findIndex(t => t.calendlyUri && ev.uri.includes(t.calendlyUri));
         if (index !== -1) {
           // 👇 Exemple: marcar que almenys hi ha una reserva
           tallers[index].inscrits = tallers[index].inscrits || [];
