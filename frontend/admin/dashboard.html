@@ -49,6 +49,7 @@
         <input type="date" id="data" required />
         <input type="number" id="places" placeholder="Places disponibles" required />
         <input type="url" id="reserva" placeholder="Enllaç de reserva (opcional)" />
+        <input type="url" id="calendlyUri" placeholder="Calendly URI (opcional)" />
         <button type="submit">Afegir taller</button>
     </form>
 
@@ -89,6 +90,7 @@
             const data = document.getElementById('data').value;
             const places = parseInt(document.getElementById('places').value);
             const enllacReserva = document.getElementById('reserva').value;
+            const calendlyUri = document.getElementById('calendlyUri').value;
 
             const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers', {
                 method: 'POST',
@@ -99,7 +101,8 @@
                     descripcio,
                     data,
                     placesDisponibles: places,
-                    enllacReserva
+                    enllacReserva,
+                    calendlyUri
                 })
             });
 
