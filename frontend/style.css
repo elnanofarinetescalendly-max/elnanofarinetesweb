@@ -244,5 +244,25 @@ footer .social-icons a:hover {
   .menu-toggle {
     display: flex;
   }
+  .menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: #fff; /* color de les barres i de la X */
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+}
+
+/* Estat actiu → convertir en X */
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 }
 }
