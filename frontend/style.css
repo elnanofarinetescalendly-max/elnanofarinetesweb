@@ -161,6 +161,15 @@ footer p {
   margin: 0.3rem 0;
 }
 
+.taller-card img.taller-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+
 /* Responsive */
 @media (min-width: 600px) {
   .tallers-container {
