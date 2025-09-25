@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     tallers.forEach(taller => {
         const card = document.createElement('div');
         card.className = 'taller-card';
+          let html = ``;
+
+        if (taller.imatge) {
+        html += `<img src="${taller.imatge}" alt="${taller.titol}" class="taller-img">`;
+        }
 
         let html = `
             <h3>${taller.titol}</h3>
