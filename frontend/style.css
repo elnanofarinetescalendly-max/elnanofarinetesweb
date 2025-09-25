@@ -242,7 +242,7 @@ footer .social-icons a:hover {
   }
 
   .menu-toggle {
-  position: relative;
+  position: flex;
   width: 30px;
   height: 22px;
 }
