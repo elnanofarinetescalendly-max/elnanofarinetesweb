@@ -6,6 +6,9 @@
   <title>Calendari de Tallers - El Nano Farinetes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+
 </head>
 <body>
   <!-- Navegació -->
@@ -34,9 +37,9 @@
     <section>
       <h2>Reserva el teu lloc</h2>
       <p>Pots fer la reserva directament al nostre sistema de calendari:</p>
-      <div style="text-align:center; margin-top:2rem;">
-        <!-- Aquí incrustem Calendly -->
-        <iframe src="https://calendly.com/elnanofarinetes-calendly" width="100%" height="700" frameborder="0"></iframe>
+      <div class="calendly-inline-widget" 
+     data-url="https://calendly.com/elnanofarinetes-calendly" 
+     style="min-width:320px;height:700px;">
       </div>
     </section>
   </main>
