@@ -1,5 +1,5 @@
-/* Tipografia general */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* Tipografies */
+@import url('https://fonts.googleapis.com/css2?family=Merienda+One&family=Roboto:wght@400;700&display=swap');
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -14,7 +14,7 @@ body {
 nav {
   position: sticky;
   top: 0;
-  background: #7c5e3c;
+  background: #7C5E3C;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -23,8 +23,8 @@ nav {
   z-index: 1000;
 }
 nav .logo {
-  font-weight: bold;
-  font-size: 1.2rem;
+  font-family: 'Merienda One', cursive;
+  font-size: 1.5rem;
 }
 nav ul {
   list-style: none;
@@ -69,7 +69,7 @@ nav .idioma button {
 nav ul.mobile-hidden {
   display: none;
   flex-direction: column;
-  background: #7c5e3c;
+  background: #7C5E3C;
   width: 100%;
   padding: 1rem 0;
 }
@@ -80,50 +80,65 @@ nav ul.mobile-hidden li {
 
 /* Capçalera */
 header {
-  background: url('https://source.unsplash.com/1600x600/?farm,field') no-repeat center center/cover;
-  padding: 4rem 1.5rem;
+  position: relative;
+  background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
+  padding: 6rem 2rem;
   color: white;
   text-align: center;
 }
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* overlay fosc */
+}
+header h1, header p, header .cta {
+  position: relative;
+  z-index: 1;
+}
 header h1 {
-  font-size: 2.5rem;
+  font-family: 'Merienda One', cursive;
+  font-size: 3rem;
   margin-bottom: 1rem;
 }
 header p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 header .cta {
   margin-top: 2rem;
   padding: 1rem 2rem;
-  background-color: #7c5e3c;
+  background-color: #6B8E23;
   border: none;
   color: white;
   font-size: 1.2rem;
   cursor: pointer;
-  border-radius: 8px;
-  transition: background 0.3s ease;
+  border-radius: 30px;
+  transition: all 0.3s ease;
 }
 header .cta:hover {
-  background-color: #5c432b;
+  background-color: #557a1f;
+  transform: scale(1.05);
 }
 
 /* Seccions */
 section {
-  padding: 2rem 1rem;
+  padding: 3rem 2rem;
   max-width: 1000px;
   margin: auto;
 }
 section h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-family: 'Merienda One', cursive;
+  color: #6B8E23;
 }
 
 /* Tallers */
 .tallers-container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 .taller-card {
   background: white;
@@ -131,23 +146,37 @@ section h2 {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.taller-card h3 {
-  margin-top: 0;
+.taller-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+.taller-card img.taller-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+.taller-card:hover img.taller-img {
+  transform: scale(1.05);
 }
 .taller-card button {
   margin-top: 1rem;
   padding: 0.8rem 1.5rem;
-  background-color: #7c5e3c;
+  background-color: #6B8E23;
   border: none;
   color: white;
   font-size: 1rem;
   cursor: pointer;
-  border-radius: 6px;
-  transition: background 0.3s ease;
+  border-radius: 30px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 .taller-card button:hover {
-  background-color: #5c432b;
+  background-color: #557a1f;
+  transform: scale(1.05);
 }
 
 /* Peu de pàgina */
@@ -160,15 +189,18 @@ footer {
 footer p {
   margin: 0.3rem 0;
 }
-
-.taller-card img.taller-img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+footer .social-icons {
+  margin-top: 1rem;
 }
-
+footer .social-icons a {
+  margin: 0 0.5rem;
+  color: #3e2f1c;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+footer .social-icons a:hover {
+  color: #6B8E23;
+}
 
 /* Responsive */
 @media (min-width: 600px) {
@@ -185,6 +217,10 @@ footer p {
   }
   nav ul.active {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }
+
 
