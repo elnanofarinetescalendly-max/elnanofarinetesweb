@@ -214,11 +214,11 @@ footer .social-icons a:hover {
     text-align: left;
     gap: 2rem;
   } */
-  .qui-soc-foto {
-    width: 200px;  /* foto més petita i proporcional */
+  /*.qui-soc-foto {
+    width: 200px;
     height: auto;
-    flex-shrink: 0; /* evita que s’encongeixi massa */
-  }
+    flex-shrink: 0;
+  }*/
   /*.qui-soc-container p {
     flex: 1;
   }*/
