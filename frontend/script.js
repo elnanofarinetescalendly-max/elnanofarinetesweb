@@ -8,28 +8,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const ul = document.createElement('ul');
+    contenedor.innerHTML = ""; // netejar contingut
+
     tallers.forEach(taller => {
-        const li = document.createElement('li');
-        let html = `<strong>${taller.titol}</strong> - ${taller.data}<br><em>${taller.descripcio}</em>`;
+        const card = document.createElement('div');
+        card.className = 'taller-card';
 
-        // 👇 Afegeix les places disponibles
+        let html = `
+            <h3>${taller.titol}</h3>
+            <p><strong>Data:</strong> ${taller.data}</p>
+            <p><em>${taller.descripcio}</em></p>
+        `;
+
+        // Places disponibles
         if (taller.placesDisponibles > 0) {
-            html += `<br>Places disponibles: ${taller.placesDisponibles}`;
+            html += `<p>Places disponibles: ${taller.placesDisponibles}</p>`;
         } else {
-            html += `<br><strong style="color:red;">Taller complet</strong>`;
+            html += `<p><strong style="color:red;">Taller complet</strong></p>`;
         }
 
-        // 👇 Si té enllaç de reserva i places, afegeix botó
+        // Botó de reserva
         if (taller.enllacReserva && taller.placesDisponibles > 0) {
-            html += `<br><a href="${taller.enllacReserva}" target="_blank"><button>Reservar</button></a>`;
+            html += `<button onclick="window.open('${taller.enllacReserva}', '_blank')">Reservar</button>`;
         }
 
-        li.innerHTML = html;
-        ul.appendChild(li);
+        card.innerHTML = html;
+        contenedor.appendChild(card);
     });
 
-    contenedor.appendChild(ul);
+    // 👉 Menú hamburguesa
+    const toggle = document.querySelector(".menu-toggle");
+    const menu = document.querySelector("nav ul");
+
+    if (toggle && menu) {
+        toggle.addEventListener("click", () => {
+            menu.classList.toggle("active");
+        });
+    }
 });
+
 
 
