@@ -141,13 +141,16 @@ section h2 {
   gap: 2rem;
 }
 .taller-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.75); /* fons blanc semi-transparent */
+  backdrop-filter: blur(8px);            /* efecte vidre */
   padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* ombra suau */
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* vora subtil de vidre */
 }
+
 .taller-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
