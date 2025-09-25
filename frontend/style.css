@@ -211,6 +211,18 @@ footer .social-icons a:hover {
 @media (max-width: 768px) {
   nav ul {
     display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* altura de la navbar */
+    left: 0;
+    width: 100%;
+    background: #7C5E3C;
+    padding: 1rem 0;
+  }
+
+  nav ul li {
+    text-align: center;
+    padding: 0.8rem 0;
   }
   .menu-toggle {
     display: flex;
