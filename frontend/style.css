@@ -242,14 +242,11 @@ footer .social-icons a:hover {
   }
 
   .menu-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   width: 30px;
-  height: 22px;
+  height: 22px; /* contenidor */
   cursor: pointer;
+  position: relative; /* per als span absolut */
   z-index: 1001;
-  position: relative; /* 👉 necessari perquè els span absolute es posicionin dins */
 }
 
 .menu-toggle span {
@@ -262,20 +259,21 @@ footer .social-icons a:hover {
   transition: all 0.4s ease;
 }
 
-.menu-toggle span:nth-child(1) { top: 0; }
-.menu-toggle span:nth-child(2) { top: 9px; }
-.menu-toggle span:nth-child(3) { bottom: 0; }
+/* Col·locació de les 3 barres */
+.menu-toggle span:nth-child(1) { top: 0; }      /* barra superior */
+.menu-toggle span:nth-child(2) { top: 9px; }    /* barra central */
+.menu-toggle span:nth-child(3) { top: 18px; }   /* barra inferior */
 
+/* Estat actiu → convertir en X */
 .menu-toggle.active span:nth-child(1) {
   transform: rotate(45deg);
-  top: 9px; /* es centra verticalment */
+  top: 9px; /* es col·loca al centre */
 }
 .menu-toggle.active span:nth-child(2) {
-  opacity: 0;
+  opacity: 0; /* desapareix */
 }
 .menu-toggle.active span:nth-child(3) {
   transform: rotate(-45deg);
-  bottom: 9px; /* es centra verticalment */
+  top: 9px; /* es col·loca també al centre */
 }
-
 }
