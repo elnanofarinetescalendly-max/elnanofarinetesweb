@@ -136,24 +136,34 @@ section h2 {
 
 /* Qui sóc */
 .qui-soc-card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 2rem;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   padding: 2rem;
-  max-width: 700px;
+  max-width: 900px;
   margin: 2rem auto;
-  text-align: center;
+  text-align: left;
 }
+
 .qui-soc-foto {
-  width: 220px;
-  height: 220px;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
   object-fit: cover;
-  object-position: center top;
-  border-radius: 50%;
+  border-radius: 12px; /* 👉 rectangular amb cantonades arrodonides */
   border: 4px solid #6B8E23;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  margin-bottom: 1.5rem;
 }
+
+.qui-soc-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 
 /* Tallers */
 .tallers-container {
@@ -315,6 +325,14 @@ footer .social-icons a:hover {
     transform: rotate(-45deg);
     top: 9px;
     background: #6B8E23;
+  }
+  .qui-soc-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .qui-soc-foto {
+    margin: 0 auto 1.5rem auto;
   }
 }
 
