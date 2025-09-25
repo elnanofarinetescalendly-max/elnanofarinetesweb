@@ -7,28 +7,46 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navegació -->
+    <nav>
+      <div class="logo">El Nano Farinetes</div>
+      <ul>
+        <li><a href="#qui-soc">Qui sóc</a></li>
+        <li><a href="#tallers">Tallers</a></li>
+        <li><a href="Calendari.html">Calendari</a></li>
+      </ul>
+      <!-- Futur selector d'idioma -->
+      <div class="idioma">
+        <button>CA</button> | <button>ES</button>
+      </div>
+    </nav>
+
+    <!-- Capçalera -->
     <header>
         <h1>El Nano Farinetes</h1>
         <p>Viu el camp amb experiències autèntiques</p>
-        <button onclick="location.href='Calendari.html'">Reserva el teu taller</button>
+        <button class="cta" onclick="location.href='Calendari.html'">Reserva el teu taller</button>
     </header>
 
-    <section id="qui-soc">
-        <h2>Qui soc</h2>
-        <p>Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat. T’ofereixo tallers al camp com calçotades, carxotades i molt més!</p>
-    </section>
+    <!-- Contingut principal -->
+    <main>
+      <section id="qui-soc">
+          <h2>Qui sóc</h2>
+          <p>Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat. T’ofereixo tallers al camp com calçotades, carxotades i molt més!</p>
+      </section>
 
-    <section id="tallers">
-        <h2>Tallers</h2>
-        <div id="llista-tallers"></div>
-    </section>
+      <section id="tallers">
+          <h2>Pròxims tallers</h2>
+          <div id="llista-tallers" class="tallers-container"></div>
+      </section>
+    </main>
 
-
+    <!-- Peu de pàgina -->
     <footer>
-        <p>Contacte: elnanofarinetes@gmail.com | Sant Boi de Llobregat</p>
+        <p>📧 elnanofarinetes@gmail.com | 📍 Sant Boi de Llobregat</p>
+        <p>&copy; 2025 El Nano Farinetes</p>
     </footer>
 
-    <script src="script.js">
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
