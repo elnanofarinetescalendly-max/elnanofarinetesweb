@@ -321,6 +321,7 @@ footer .social-icons a:hover {
   width: 180px;
   height: 180px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 50%; /* 👉 rodona */
   border: 4px solid #6B8E23; /* vora verd oliva */
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* ombra suau */
