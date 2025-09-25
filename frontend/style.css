@@ -225,23 +225,31 @@ footer .social-icons a:hover {
     transition: max-height 0.4s ease-in-out, padding 0.3s ease;
     padding: 0;
     width: auto;
-    min-width: 160px;
+    min-width: 170px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.25);
     z-index: 999;
   }
 
   nav ul.active {
     max-height: 500px;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0; /* 👉 més airejat */
   }
 
   nav ul li {
     text-align: left;
-    padding: 0.8rem 1rem;
+    padding: 1rem 1.2rem; /* 👉 més espai per clic amb el dit */
     white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
-  /* 👉 aquí fem visible la hamburguesa */
+  nav ul.active li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hamburguesa */
   .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -271,6 +279,7 @@ footer .social-icons a:hover {
   .menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg);
     top: 9px;
+    background: #6B8E23; /* 👉 verd oliva */
   }
   .menu-toggle.active span:nth-child(2) {
     opacity: 0;
@@ -278,5 +287,6 @@ footer .social-icons a:hover {
   .menu-toggle.active span:nth-child(3) {
     transform: rotate(-45deg);
     top: 9px;
+    background: #6B8E23; /* 👉 verd oliva */
   }
 }
