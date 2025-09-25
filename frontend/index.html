@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -6,63 +7,70 @@
   <title>El Nano Farinetes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
-  <!-- Navegació -->
-  <nav>
-    <div class="logo">El Nano Farinetes</div>
-    <ul>
-      <li><a href="#qui-soc">Qui sóc</a></li>
-      <li><a href="#tallers">Tallers</a></li>
-      <li><a href="Calendari.html">Calendari</a></li>
-    </ul>
-    <div class="idioma">
-      <button onclick="location.href='index.html'">CA</button> | 
-      <button onclick="location.href='index-es.html'">ES</button>
-    </div>
-    <div class="menu-toggle"><span></span><span></span><span></span></div>
-  </nav>
+    <!-- Navegació -->
+    <nav>
+      
 
-  <!-- Capçalera -->
-  <header>
-    <h1>El Nano Farinetes</h1>
-    <p>Viu el camp amb experiències autèntiques</p>
-    <button class="cta" onclick="location.href='Calendari.html'">Reserva el teu taller</button>
-  </header>
+      <div class="logo">El Nano Farinetes</div>
+      <ul>
+        <li><a href="#qui-soc">Qui sóc</a></li>
+        <li><a href="#tallers">Tallers</a></li>
+        <li><a href="Calendari.html">Calendari</a></li>
+      </ul>
+      <!-- Futur selector d'idioma -->
+      <div class="idioma">
+        <button onclick="location.href='index.html'">CA</button> | 
+        <button onclick="location.href='index-es.html'">ES</button>
+      </div>
+      <!-- Botó menú hamburguesa (només mòbil) -->
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
 
-  <!-- Secció Qui sóc -->
-  <main>
-    <section id="qui-soc">
-      <h2>Qui sóc</h2>
-      <p>Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat. T’ofereixo tallers al camp com calçotades, carxotades i molt més!</p>
-    </section>
+    <!-- Capçalera -->
+    <header>
+        <h1>El Nano Farinetes</h1>
+        <p>Viu el camp amb experiències autèntiques</p>
+        <button class="cta" onclick="location.href='Calendari.html'">Reserva el teu taller</button>
+    </header>
 
-    <!-- ONA separadora -->
-    <div class="wave">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-        <path d="M0,64L1440,0L1440,320L0,320Z"></path>
-      </svg>
-    </div>
+    <!-- Contingut principal -->
+    <main>
+      <section id="qui-soc">
+          <h2>Qui sóc</h2>
+          <p>Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat. T’ofereixo tallers al camp com calçotades, carxotades i molt més!</p>
+      </section>
 
-    <!-- Secció Tallers -->
-    <section id="tallers">
-      <h2>Pròxims tallers</h2>
-      <div id="llista-tallers" class="tallers-container"></div>
-    </section>
-  </main>
+      <section id="tallers">
+          <h2>Pròxims tallers</h2>
+          <div id="llista-tallers" class="tallers-container"></div>
+      </section>
+    </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>📍 Sant Boi de Llobregat</p>
-    <p>📧 <a href="mailto:elnanofarinetes@gmail.com">elnanofarinetes@gmail.com</a></p>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/elnanofarinetes" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/elnanofarinetes" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
-    </div>
-    <p>&copy; 2025 El Nano Farinetes</p>
-  </footer>
+    <!-- Peu de pàgina -->
+    <footer>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/el_nano_farinetes" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/elnanofarinetes" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="mailto:elnanofarinetes@gmail.com" aria-label="Correu electrònic">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
 
-  <script src="script.js"></script>
+  <p>&copy; 2025 El Nano Farinetes</p>
+</footer>
+
+
+    <script src="script.js"></script>
 </body>
 </html>
