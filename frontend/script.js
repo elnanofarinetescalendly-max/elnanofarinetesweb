@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         html += `<img src="${taller.imatge}" alt="${taller.titol}" class="taller-img">`;
         }
 
-        let html = `
+        let html += `
             <h3>${taller.titol}</h3>
             <p><strong>Data:</strong> ${taller.data}</p>
             <p><em>${taller.descripcio}</em></p>
