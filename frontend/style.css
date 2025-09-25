@@ -209,22 +209,36 @@ footer .social-icons a:hover {
   }
 }
 @media (max-width: 768px) {
+  nav {
+    position: relative; /* fem servir de referència per col·locar el menú */
+  }
+
   nav ul {
+    position: absolute;
+    top: 100%; /* just sota la navbar */
+    right: 1rem; /* enganxat a la dreta */
     max-height: 0;
     overflow: hidden;
     flex-direction: column;
     background: #7C5E3C;
-    width: 100%;
-    transition: max-height 0.4s ease-in-out;
+    border-radius: 10px;
+    transition: max-height 0.4s ease-in-out, padding 0.3s ease;
+    padding: 0;
+    width: auto; /* s’adapta al contingut */
+    min-width: 160px; /* mínim per no quedar massa petit */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* 👉 ombra suau */
+    z-index: 999;
   }
 
   nav ul.active {
-    max-height: 300px; /* prou alt per mostrar tots els enllaços */
+    max-height: 500px; /* prou gran per tots els enllaços */
+    padding: 0.5rem 0;
   }
 
   nav ul li {
-    text-align: center;
-    padding: 0.8rem 0;
+    text-align: left;
+    padding: 0.8rem 1rem;
+    white-space: nowrap; /* evita que les paraules es tallin */
   }
 
   .menu-toggle {
