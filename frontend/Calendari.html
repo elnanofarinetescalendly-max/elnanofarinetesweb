@@ -2,123 +2,57 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
-  <title>Calendari de Tallers</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    #calendar { max-width: 900px; margin: 0 auto; }
-
-    /* Estil per la finestra modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      margin: 15% auto;
-      border-radius: 8px;
-      max-width: 500px;
-    }
-    .close {
-      float: right;
-      font-size: 24px;
-      cursor: pointer;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendari de Tallers - El Nano Farinetes</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <h1>Calendari de Tallers</h1>
-  <div id="calendar"></div>
-
-  <!-- Modal -->
-  <div id="tallerModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2 id="modalTitol"></h2>
-      <p id="modalDescripcio"></p>
-      <p><strong>Data:</strong> <span id="modalData"></span></p>
-      <p><strong>Places:</strong> <span id="modalPlaces"></span></p>
-      <p id="modalEnllacReserva" style="margin-top: 1em;"></p>
+  <!-- Navegació -->
+  <nav>
+    <div class="logo">El Nano Farinetes</div>
+    <ul>
+      <li><a href="index.html#qui-soc">Qui sóc</a></li>
+      <li><a href="index.html#tallers">Tallers</a></li>
+      <li><a href="Calendari.html">Calendari</a></li>
+    </ul>
+    <div class="idioma">
+      <button onclick="location.href='Calendari.html'">CA</button> | 
+      <button onclick="location.href='Calendario.html'">ES</button>
     </div>
-  </div>
+    <div class="menu-toggle"><span></span><span></span><span></span></div>
+  </nav>
 
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const calendarEl = document.getElementById('calendar');
+  <!-- Capçalera -->
+  <header>
+    <h1>Calendari de tallers</h1>
+    <p>Consulta i reserva els propers tallers</p>
+  </header>
 
-      // Modal refs
-      const modal = document.getElementById('tallerModal');
-      const spanClose = document.querySelector('.close');
-      const modalTitol = document.getElementById('modalTitol');
-      const modalDescripcio = document.getElementById('modalDescripcio');
-      const modalData = document.getElementById('modalData');
-      const modalPlaces = document.getElementById('modalPlaces');
+  <!-- Contingut -->
+  <main>
+    <section>
+      <h2>Reserva el teu lloc</h2>
+      <p>Pots fer la reserva directament al nostre sistema de calendari:</p>
+      <div style="text-align:center; margin-top:2rem;">
+        <!-- Aquí incrustem Calendly -->
+        <iframe src="https://calendly.com/elnanofarinetes" width="100%" height="700" frameborder="0"></iframe>
+      </div>
+    </section>
+  </main>
 
-      spanClose.onclick = () => modal.style.display = 'none';
-      window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+  <!-- Footer -->
+  <footer>
+    <p>📍 Sant Boi de Llobregat</p>
+    <p>📧 <a href="mailto:elnanofarinetes@gmail.com">elnanofarinetes@gmail.com</a></p>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/elnanofarinetes" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/elnanofarinetes" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>&copy; 2025 El Nano Farinetes</p>
+  </footer>
 
-      const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers');
-      const tallers = await resposta.json();
-
-      const events = tallers.map(taller => {
-        const inscrits = taller.inscrits || 0;
-        const disponibles = taller.placesDisponibles - inscrits;
-        const hiHaPlaces = disponibles > 0;
-
-        return {
-          title: disponibles === 1 
-            ? `⚠️ ${taller.titol} – Última plaça!`
-            : `${taller.titol} – Queden ${disponibles} places`,
-          start: taller.data,
-          color: hiHaPlaces ? '#3788d8' : 'red',
-          extendedProps: {
-            descripcio: taller.descripcio,
-            data: taller.data,
-            places: disponibles === 1 
-            ? "⚠️ Queda 1 plaça" 
-            : `Queden ${disponibles} places`,
-
-            enllac: taller.enllacReserva || null
-          }
-        };
-      });
-
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: 'dayGridMonth',
-  locale: 'ca',
-  events: events,
-  eventClick: function(info) {
-    modalTitol.textContent = info.event.title;
-    modalDescripcio.textContent = info.event.extendedProps.descripcio;
-    modalData.textContent = new Date(info.event.start).toLocaleDateString('ca-ES');
-    modalPlaces.textContent = info.event.extendedProps.places;
-
-    const enllac = info.event.extendedProps.enllac;
-    if (enllac) {
-      modalEnllacReserva.innerHTML = `<a href="${enllac}" target="_blank">Reservar plaça</a>`;
-    } else {
-      modalEnllacReserva.textContent = 'Taller complet o sense reserva disponible.';
-    }
-
-    modal.style.display = 'block';
-  },
-  eventDidMount: function(info) {
-    if (info.event.extendedProps.descripcio) {
-      info.el.title = info.event.extendedProps.descripcio;
-    }
-  }
-});
-
-
-      calendar.render();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-
