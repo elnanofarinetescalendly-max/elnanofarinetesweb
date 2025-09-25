@@ -242,9 +242,13 @@ footer .social-icons a:hover {
   }
 
   .menu-toggle {
-  position: flex;
-  width: 30px;
-  height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1001;
 }
 
 .menu-toggle span {
