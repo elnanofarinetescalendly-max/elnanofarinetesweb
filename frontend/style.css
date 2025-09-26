@@ -297,6 +297,16 @@ nav.scrolled {
   display: flex; /* visible en PC */
   gap: 0.5rem;
   align-items: center;
+  background: transparent;
+  border: 2px solid #fff;     /* vora blanca */
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;        /* forma de pastilla */
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .idioma-mobile {
@@ -311,5 +321,13 @@ nav.scrolled {
     display: block; /* mostrem idiomes dins el menú */
     text-align: left;
     padding: 0.5rem 0.25rem;
+    background: transparent;
+  border: 2px solid #fff;     /* vora blanca */
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+    border-radius: 20px;        /* forma de pastilla */
+  transition: all 0.3s ease;
   }
 }
