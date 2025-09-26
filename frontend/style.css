@@ -50,7 +50,7 @@ nav .idioma {
 }
 /* NAV base: transparent (es veu bé sobre el hero) */
 nav {
-  background: transparent;
+  background: #7C5E3C;
   transition: background 0.25s ease, -webkit-backdrop-filter 0.25s ease, backdrop-filter 0.25s ease;
 }
 /* En fer scroll: fondut + blur premium */
