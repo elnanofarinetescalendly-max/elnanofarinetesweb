@@ -49,8 +49,7 @@ nav ul li a {
   gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
 }
 
-nav .idioma button {
-  all: unset;                 /* 🔥 elimina TOT l’estil per defecte del navegador */
+nav .idioma button {             
   display: inline-block;
   background: transparent;
   border: 2px solid #fff;     /* vora blanca */
