@@ -293,6 +293,15 @@ nav.scrolled {
 }
 
 /* 🌐 Idiomes */
+.idioma-desktop {
+  display: flex;   /* visible en PC */
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.idioma-mobile {
+  display: none;   /* amagat en PC */
+}
 .idioma-desktop button,
 .idioma-mobile button {
   all: unset; /* 🔥 elimina estil per defecte */
@@ -322,6 +331,7 @@ nav.scrolled {
   color: #7C5E3C;
   border-color: #fff;
 }
+
 
 /* En mòbil */
 @media (max-width: 768px) {
