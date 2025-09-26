@@ -311,3 +311,23 @@ nav.scrolled {
   backdrop-filter: blur(6px);
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
+/* Idiomes */
+.idioma-mobile {
+  display: none; /* ocult per defecte (desktop) */
+}
+
+.idioma-desktop {
+  display: flex; /* visible en desktop */
+}
+
+/* En mòbil → canviem la visibilitat */
+@media (max-width: 768px) {
+  .idioma-desktop {
+    display: none; /* amaguem idiomes fora del menú */
+  }
+  .idioma-mobile {
+    display: block; /* mostrem idiomes dins el menú */
+    text-align: left;
+    padding: 0.5rem 0.25rem;
+  }
+}
