@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendario de Talleres - El Nano Farinetes</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
   <!-- Calendly Embed -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
@@ -16,15 +17,23 @@
   <nav>
     <div class="logo">El Nano Farinetes</div>
     <ul>
-      <li><a href="index-es.html#quien-soy">Quién soy</a></li>
-      <li><a href="index-es.html#talleres">Talleres</a></li>
-      <li><a href="Calendario.html">Calendario</a></li>
+      <li><a href="index-es.html#qui-soc">Quién soy</a></li>
+      <li><a href="index-es.html#tallers">Talleres</a></li>
+      <li><a href="Calendario.html" class="active">Calendario</a></li>
+      <!-- Idiomas dentro del menú (móvil) -->
+      <li class="idioma-mobile">
+        <button onclick="location.href='Calendari.html'">CA</button>
+        <button class="active" onclick="location.href='Calendario.html'">ES</button>
+      </li>
     </ul>
-    <div class="idioma">
-      <button onclick="location.href='Calendari.html'">CA</button> | 
-      <button onclick="location.href='Calendario.html'">ES</button>
+    <div class="nav-right">
+      <!-- Idiomas (desktop) -->
+      <div class="idioma-desktop">
+        <button onclick="location.href='Calendari.html'">CA</button>
+        <button class="active" onclick="location.href='Calendario.html'">ES</button>
+      </div>
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
     </div>
-    <div class="menu-toggle"><span></span><span></span><span></span></div>
   </nav>
 
   <!-- 🏞️ Mini Hero -->
@@ -36,22 +45,25 @@
   </header>
 
   <!-- 📅 Calendly -->
-  <main class="calendari">
+  <main class="calendari" style="padding: 3rem 2rem; max-width: 1100px; margin: 0 auto;">
     <div class="calendly-inline-widget"
          data-url="https://calendly.com/elnanofarinetes-calendly"
-         style="min-width:100%;height:800px;">
+         style="min-width:100%; height:800px;">
     </div>
     <p style="text-align:center; margin-top:1rem;">
-      Si no se carga el calendario, haz clic aquí 👉 
-      <a href="https://calendly.com/elnanofarinetes-calendly" target="_blank">Abrir Calendly</a>
+      Si no se carga el calendario, haz clic aquí 👉
+      <a href="https://calendly.com/elnanofarinetes-calendly" target="_blank" rel="noopener">Abrir Calendly</a>
     </p>
+
+    <!-- 👇 Evita errores si el script.js busca #llista-tallers -->
+    <div id="llista-tallers" hidden></div>
   </main>
 
   <!-- 📩 Footer -->
   <footer>
     <div class="social-icons">
-      <a href="https://www.instagram.com/el_nano_farinetes" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/elnanofarinetes" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/el_nano_farinetes" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/elnanofarinetes" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
       <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
     </div>
     <p>&copy; 2025 El Nano Farinetes</p>
