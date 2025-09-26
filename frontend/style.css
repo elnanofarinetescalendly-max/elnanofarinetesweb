@@ -18,7 +18,7 @@ nav {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo esquerra, idiomes dreta */
+  justify-content: space-between; /* logo esquerra, menú + dreta */
   padding: 1rem 2rem;
   z-index: 1000;
 }
@@ -43,43 +43,33 @@ nav ul li a {
   font-weight: 500;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
+}
+
 nav .idioma {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-right: 1rem; /* ✨ espai extra abans de l’hamburguesa */
 }
+
 nav .idioma button {
-  background: none;      /* sense fons */
-  border: none;          /* sense vora */
-  color: white;          /* text blanc */
+  background: none;
+  border: none;
+  color: white;
   cursor: pointer;
   font-weight: 500;
   font-size: 0.9rem;
-  padding: 0;            /* elimina padding per defecte */
+  padding: 0;
   transition: color 0.3s ease;
 }
 
 nav .idioma button:hover {
-  color: #C5E1A5;        /* verd oliva clar en hover */
+  color: #C5E1A5;
 }
-/* NAV base: transparent (es veu bé sobre el hero) */
-nav {
-  background: #7C5E3C;
-  transition: background 0.25s ease, -webkit-backdrop-filter 0.25s ease, backdrop-filter 0.25s ease;
-}
-/* En fer scroll: fondut + blur premium */
-nav.scrolled {
-  background: rgba(124, 94, 60, 0.82);
-  -webkit-backdrop-filter: saturate(180%) blur(8px);
-  backdrop-filter: saturate(180%) blur(8px);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-}
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem; /* ✨ sempre espaiat */
-}
+
 /* 🏞️ Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
