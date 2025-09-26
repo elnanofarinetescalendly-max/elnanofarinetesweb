@@ -17,21 +17,18 @@ nav {
   background: #7C5E3C;
   color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between; /* logo esquerra, idiomes dreta */
   padding: 1rem 2rem;
   z-index: 1000;
 }
+
 nav .logo {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
+  margin-right: 2rem; /* aire entre logo i menú */
 }
-/* agrupem menú + selector d’idioma a la dreta */
-nav .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 2rem; /* espai entre menú i idiomes */
-}
+
 nav ul {
   list-style: none;
   display: flex;
@@ -39,22 +36,18 @@ nav ul {
   margin: 0;
   padding: 0;
 }
+
 nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: 500;
 }
-nav ul li a:hover {
-  text-decoration: underline;
-}
-nav .idioma button {
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
 
+nav .idioma {
+  margin-left: auto; /* empeny idiomes a la dreta del tot */
+  display: flex;
+  gap: 0.3rem;
+}
 /* 🏞️ Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
