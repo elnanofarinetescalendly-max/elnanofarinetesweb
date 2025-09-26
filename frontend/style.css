@@ -26,6 +26,12 @@ nav .logo {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
 }
+/* agrupem menú + selector d’idioma a la dreta */
+nav .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* espai entre menú i idiomes */
+}
 nav ul {
   list-style: none;
   display: flex;
