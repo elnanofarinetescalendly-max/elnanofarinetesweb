@@ -311,16 +311,6 @@ nav.scrolled {
   backdrop-filter: blur(6px);
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
-/* Idiomes */
-.idioma-mobile {
-  display: block; /* ocult per defecte (desktop) */
-  padding: 0.5rem 0;
-  text-align: left;
-}
-
-.idioma-desktop {
-  display: none; /* visible en desktop */
-}
 
 /* En mòbil → canviem la visibilitat */
 /* Estat per defecte (desktop) */
