@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -7,77 +6,65 @@
   <title>El Nano Farinetes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 <body>
-    <!-- Navegació -->
-    <nav>
-      
 
-      <div class="logo">El Nano Farinetes</div>
-      <ul>
-        <li><a href="#qui-soc">Qui sóc</a></li>
-        <li><a href="#tallers">Tallers</a></li>
-        <li><a href="Calendari.html">Calendari</a></li>
-      </ul>
-      <!-- Futur selector d'idioma -->
-      <div class="idioma">
-        <button onclick="location.href='index.html'">CA</button> | 
-        <button onclick="location.href='index-es.html'">ES</button>
-      </div>
-      <!-- Botó menú hamburguesa (només mòbil) -->
-      <div class="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </nav>
+  <!-- 🔝 Navegació -->
+  <nav>
+    <div class="logo">El Nano Farinetes</div>
+    <ul>
+      <li><a href="#qui-soc">Qui sóc</a></li>
+      <li><a href="#tallers">Tallers</a></li>
+      <li><a href="Calendari.html">Calendari</a></li>
+    </ul>
+    <div class="idioma">
+      <button onclick="location.href='index.html'">CA</button> | 
+      <button onclick="location.href='index-es.html'">ES</button>
+    </div>
+    <div class="menu-toggle"><span></span><span></span><span></span></div>
+  </nav>
 
-    <!-- Capçalera -->
-    <header>
-        <h1>El Nano Farinetes</h1>
-        <p>Viu el camp amb experiències autèntiques</p>
-        <button class="cta" onclick="location.href='Calendari.html'">Reserva el teu taller</button>
-    </header>
+  <!-- 🏞️ Hero -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Viu el camp amb experiències autèntiques</h1>
+      <p>Calçotades, carxotades i molt més a Sant Boi de Llobregat</p>
+      <button class="cta" onclick="location.href='Calendari.html'">Reserva el teu taller</button>
+    </div>
+  </header>
 
-    <!-- Contingut principal -->
-    <main>
-      <section id="qui-soc">
+  <!-- 👤 Qui sóc -->
+  <section id="qui-soc" class="qui-soc">
+    <div class="qui-soc-content">
+      <div class="qui-soc-text">
         <h2>Qui sóc</h2>
-        <div class="qui-soc-card">
-          <img src="https://tse1.mm.bing.net/th/id/OIP.3f-i5EjJfrmkREM96b5olgHaE7?pid=Api" alt="El Nano Farinetes" class="qui-soc-foto">
-          <div class="qui-soc-text">
-            <p>
-              Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat.  
-              T’ofereixo tallers al camp com calçotades, carxotades i molt més!
-            </p>
-          </div>
-        </div>
-      </section>
-      <section id="tallers">
-          <h2>Pròxims tallers</h2>
-          <div id="llista-tallers" class="tallers-container"></div>
-      </section>
-    </main>
+        <p>
+          Sóc el Nano Farinetes, pagès de Sant Boi de Llobregat.  
+          T’ofereixo tallers al camp com calçotades, carxotades i molt més!
+        </p>
+      </div>
+      <img src="img/qui-soc.jpg" alt="El Nano Farinetes" class="qui-soc-foto">
+    </div>
+  </section>
 
-    <!-- Peu de pàgina -->
-    <footer>
-  <div class="social-icons">
-    <a href="https://www.instagram.com/el_nano_farinetes" target="_blank" aria-label="Instagram">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://www.facebook.com/elnanofarinetes" target="_blank" aria-label="Facebook">
-      <i class="fab fa-facebook"></i>
-    </a>
-    <a href="mailto:elnanofarinetes@gmail.com" aria-label="Correu electrònic">
-      <i class="fas fa-envelope"></i>
-    </a>
-  </div>
+  <!-- 🌱 Tallers -->
+  <section id="tallers" class="tallers">
+    <h2>Pròxims tallers</h2>
+    <div id="llista-tallers" class="tallers-container"></div>
+  </section>
 
-  <p>&copy; 2025 El Nano Farinetes</p>
-</footer>
+  <!-- 📩 Footer -->
+  <footer>
+    <p>📍 Sant Boi de Llobregat</p>
+    <p>📧 <a href="mailto:elnanofarinetes@gmail.com">elnanofarinetes@gmail.com</a></p>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/elnanofarinetes" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/elnanofarinetes" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>&copy; 2025 El Nano Farinetes</p>
+  </footer>
 
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
