@@ -234,20 +234,25 @@ footer .social-icons a:hover {
   background: #fff;
   border-radius: 2px;
   transition: all 0.4s ease;
-  position: relative;
+  position: absolute;
+  left: 0;
 }
+.menu-toggle span:nth-child(1) { top: 0; }
+.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(3) { top: 18px; }
 
-/* Quan el menú està actiu → convertir en X */
+/* Estat actiu → X centrada */
 .menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg);
+  top: 9px; /* 👉 es col·loca al centre */
 }
 .menu-toggle.active span:nth-child(2) {
   opacity: 0;
 }
 .menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+  transform: rotate(-45deg);
+  top: 9px; /* 👉 també al centre */
 }
-
 /* Mostrar només en mòbil */
 @media (max-width: 768px) {
   .menu-toggle {
