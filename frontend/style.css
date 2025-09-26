@@ -49,26 +49,6 @@ nav ul li a {
   gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
 }
 
-nav .idioma button {             
-  display: inline-block;
-  background: transparent;
-  border: 2px solid #fff;     /* vora blanca */
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.85rem;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;        /* forma de pastilla */
-  transition: all 0.3s ease;
-  text-align: center;
-}
-
-nav .idioma button:hover {
-  background: #6B8E23;        /* verd oliva en hover */
-  border-color: #6B8E23;
-  color: #fff;
-}
-
 /* 🏞️ Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
