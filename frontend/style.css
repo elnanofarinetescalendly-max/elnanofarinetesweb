@@ -44,7 +44,6 @@ nav ul li a {
 }
 
 nav .idioma {
-  margin-left: auto; /* empeny idiomes a la dreta del tot */
   display: flex;
   gap: 0.5rem;
   align-items: center;
