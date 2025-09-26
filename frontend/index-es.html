@@ -4,51 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Nano Farinetes</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=6">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- 🔝 Navegación -->
+  <!-- 🔝 Navegació -->
   <nav>
     <div class="logo">El Nano Farinetes</div>
     <ul>
-      <li><a href="#quien-soy">Quién soy</a></li>
-      <li><a href="#talleres">Talleres</a></li>
+      <li><a href="#qui-soc">Quién soy</a></li>
+      <li><a href="#tallers">Talleres</a></li>
       <li><a href="Calendario.html">Calendario</a></li>
+      <li class="idioma-mobile">
+        <button onclick="location.href='index.html'">CA</button>
+        <button class="active" onclick="location.href='index-es.html'">ES</button>
+      </li>
     </ul>
-    <div class="idioma">
-      <button onclick="location.href='index.html'">CA</button> | 
-      <button onclick="location.href='index-es.html'">ES</button>
+    <div class="nav-right">
+      <div class="idioma-desktop">
+        <button onclick="location.href='index.html'">CA</button>
+        <button class="active" onclick="location.href='index-es.html'">ES</button>
+      </div>
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
     </div>
-    <div class="menu-toggle"><span></span><span></span><span></span></div>
   </nav>
 
   <!-- 🏞️ Hero -->
   <header class="hero">
     <div class="hero-content">
       <h1>Vive el campo con experiencias auténticas</h1>
-      <p>Calçotadas, alcachofadas y mucho más en Sant Boi de Llobregat</p>
+      <p>Calçotadas, carxotadas y mucho más en Sant Boi de Llobregat</p>
       <button class="cta" onclick="location.href='Calendario.html'">Reserva tu taller</button>
     </div>
   </header>
 
-  <!-- 👤 Quién soy -->
-  <section id="quien-soy" class="qui-soc">
+  <!-- 👤 Qui sóc -->
+  <section id="qui-soc" class="qui-soc">
     <div class="qui-soc-content">
       <div class="qui-soc-text">
         <h2>Quién soy</h2>
         <p>
-          Soy el Nano Farinetes, payés de Sant Boi de Llobregat.  
-          Te ofrezco talleres en el campo como calçotadas, alcachofadas ¡y mucho más!
+          Soy el Nano Farinetes, campesino de Sant Boi de Llobregat.  
+          Te ofrezco talleres en el campo como calçotadas, carxotadas ¡y mucho más!
         </p>
       </div>
-      <img src="https://tse1.mm.bing.net/th/id/OIP.3f-i5EjJfrmkREM96b5olgHaE7?pid=Api" alt="El Nano Farinetes" class="qui-soc-foto">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.3f-i5EjJfrmkREM96b5olgHaE7?pid=Api" 
+           alt="El Nano Farinetes" class="qui-soc-foto">
     </div>
   </section>
 
   <!-- 🌱 Talleres -->
-  <section id="talleres" class="tallers">
+  <section id="tallers" class="tallers">
     <h2>Próximos talleres</h2>
     <div id="llista-tallers" class="tallers-container"></div>
   </section>
