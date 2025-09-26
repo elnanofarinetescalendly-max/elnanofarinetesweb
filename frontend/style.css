@@ -273,4 +273,35 @@ footer .social-icons a:hover {
   nav ul.active {
     display: flex;
   }
+  /* 2️⃣ Menú en mòbil més compacte */
+@media (max-width: 768px) {
+  nav ul {
+    position: absolute;
+    top: 100%;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    background: rgba(124, 94, 60, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    padding: 0.5rem 1rem; /* 👉 menys padding */
+    min-width: 160px;
+  }
+
+  nav ul li {
+    padding: 0.5rem 0; /* 👉 menys alçada per element */
+    text-align: left;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+}
+
+/* 3️⃣ Navbar amb fons translúcid i blur en scroll */
+  nav.scrolled {
+    background: rgba(124, 94, 60, 0.85); /* fons més lleuger */
+    backdrop-filter: blur(6px);          /* efecte vidre */
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  }
 }
