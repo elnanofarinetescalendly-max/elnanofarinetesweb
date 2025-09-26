@@ -75,6 +75,11 @@ nav.scrolled {
   backdrop-filter: saturate(180%) blur(8px);
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* ✨ sempre espaiat */
+}
 /* 🏞️ Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
