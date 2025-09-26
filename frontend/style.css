@@ -293,29 +293,36 @@ nav.scrolled {
 
 /* En mòbil → canviem la visibilitat */
 /* Estat per defecte (desktop) */
-.idioma-desktop button {
-  background: transparent;
+/* Botons d’idioma – estil modern */
+.idioma-desktop button,
+.idioma-mobile button {
+  all: unset; /* 🔥 elimina estil per defecte del navegador */
+  cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;       /* forma de píndola */
   border: 2px solid #fff;     /* vora blanca */
   color: #fff;
-  cursor: pointer;
   font-weight: 600;
   font-size: 0.85rem;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;        /* forma de pastilla */
   transition: all 0.3s ease;
-  text-align: center;
+  margin: 0 0.2rem;           /* una mica d’espai entre ells */
 }
 
-.idioma-desktop button:hover {
-  background: #6B8E23;
+/* Hover */
+.idioma-desktop button:hover,
+.idioma-mobile button:hover {
+  background: #6B8E23;        /* verd oliva */
   border-color: #6B8E23;
+  color: #fff;
 }
 
-/* Amaguem la versió mobile per defecte */
-.idioma-mobile {
-  display: none;
-}
-
+/* Actiu */
+.idioma-desktop button.active,
+.idioma-mobile button.active {
+  background: #fff;
+  color: #7C5E3C;             /* marró corporatiu */
+  border-color: #fff;
+  
 /* En mòbil */
 @media (max-width: 768px) {
   .idioma-desktop {
