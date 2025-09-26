@@ -48,6 +48,7 @@ nav .idioma {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  margin-right: 1rem; /* ✨ espai extra abans de l’hamburguesa */
 }
 nav .idioma button {
   background: none;      /* sense fons */
