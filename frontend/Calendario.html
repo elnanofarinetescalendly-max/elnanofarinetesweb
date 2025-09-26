@@ -6,13 +6,13 @@
   <title>Calendario de Talleres - El Nano Farinetes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <!-- Calendly Embed -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
-  <!-- Navegación -->
+
+  <!-- 🔝 Navegación -->
   <nav>
     <div class="logo">El Nano Farinetes</div>
     <ul>
@@ -27,33 +27,27 @@
     <div class="menu-toggle"><span></span><span></span><span></span></div>
   </nav>
 
-  <!-- Cabecera -->
-  <header>
-    <h1>Calendario de talleres</h1>
-    <p>Consulta y reserva los próximos talleres</p>
+  <!-- 🏞️ Mini Hero -->
+  <header class="hero hero-small">
+    <div class="hero-content">
+      <h1>Calendario de talleres</h1>
+      <p>Consulta y reserva tu plaza</p>
+    </div>
   </header>
 
-  <!-- Contenido -->
-  <main>
-    <section>
-      <h2>Reserva tu plaza</h2>
-      <p>Puedes hacer la reserva directamente en nuestro sistema de calendario:</p>
-
-      <!-- Calendly embed -->
-      <div class="calendly-inline-widget"
-           data-url="https://calendly.com/elnanofarinetes-calendly"
-           style="min-width:100%;height:800px;">
-      </div>
-
-      <!-- Mensaje de fallback -->
-      <p style="text-align:center; margin-top:1rem;">
-        Si no se carga el calendario, haz clic aquí 👉 
-        <a href="https://calendly.com/elnanofarinetes-calendly" target="_blank">Abrir Calendly</a>
-      </p>
-    </section>
+  <!-- 📅 Calendly -->
+  <main class="calendari">
+    <div class="calendly-inline-widget"
+         data-url="https://calendly.com/elnanofarinetes"
+         style="min-width:100%;height:800px;">
+    </div>
+    <p style="text-align:center; margin-top:1rem;">
+      Si no se carga el calendario, haz clic aquí 👉 
+      <a href="https://calendly.com/elnanofarinetes" target="_blank">Abrir Calendly</a>
+    </p>
   </main>
 
-  <!-- Footer -->
+  <!-- 📩 Footer -->
   <footer>
     <div class="social-icons">
       <a href="https://www.instagram.com/el_nano_farinetes" target="_blank"><i class="fab fa-instagram"></i></a>
