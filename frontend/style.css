@@ -60,6 +60,9 @@ nav .idioma button {
   color: white;
   position: relative;
 }
+.hero-small {
+  min-height: 40vh;
+}
 .hero::before {
   content: "";
   position: absolute;
