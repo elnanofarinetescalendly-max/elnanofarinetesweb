@@ -293,10 +293,7 @@ nav.scrolled {
 
 /* En mòbil → canviem la visibilitat */
 /* Estat per defecte (desktop) */
-.idioma-desktop {
-  display: flex; /* visible en PC */
-  gap: 0.5rem;
-  align-items: center;
+.idioma-desktop button {
   background: transparent;
   border: 2px solid #fff;     /* vora blanca */
   color: #fff;
@@ -309,25 +306,40 @@ nav.scrolled {
   text-align: center;
 }
 
-.idioma-mobile {
-  display: none; /* amagat en PC */
+.idioma-desktop button:hover {
+  background: #6B8E23;
+  border-color: #6B8E23;
 }
 
+/* Amaguem la versió mobile per defecte */
+.idioma-mobile {
+  display: none;
+}
+
+/* En mòbil */
 @media (max-width: 768px) {
   .idioma-desktop {
-    display: none; /* amaguem idiomes fora del menú */
+    display: none; /* ocultem la de dalt */
   }
   .idioma-mobile {
-    display: block; /* mostrem idiomes dins el menú */
+    display: block;
     text-align: left;
-    padding: 0.5rem 0.25rem;
+  }
+
+  .idioma-mobile button {
     background: transparent;
-  border: 2px solid #fff;     /* vora blanca */
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.85rem;
-    border-radius: 20px;        /* forma de pastilla */
-  transition: all 0.3s ease;
+    border: 2px solid #fff; 
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .idioma-mobile button:hover {
+    background: #6B8E23;
+    border-color: #6B8E23;
   }
 }
