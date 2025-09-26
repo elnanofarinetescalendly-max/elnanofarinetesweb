@@ -50,30 +50,22 @@ nav ul li a {
 }
 
 nav .idioma button {
+  all: unset;                 /* 🔥 elimina TOT l’estil per defecte del navegador */
+  display: inline-block;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #fff;     /* vora blanca */
   color: #fff;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;       /* forma de pastilla */
+  font-size: 0.85rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;        /* forma de pastilla */
   transition: all 0.3s ease;
-}
-
-nav .idioma button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 0;
-  transition: color 0.3s ease;
+  text-align: center;
 }
 
 nav .idioma button:hover {
-  background: #6B8E23;       /* verd oliva al passar-hi per sobre */
+  background: #6B8E23;        /* verd oliva en hover */
   border-color: #6B8E23;
   color: #fff;
 }
