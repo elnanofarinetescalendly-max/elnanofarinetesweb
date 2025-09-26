@@ -251,6 +251,7 @@ footer .social-icons a:hover {
   cursor: pointer;
   position: relative;
   z-index: 1001;
+  margin-left: 1rem;
 }
 
 .menu-toggle span {
