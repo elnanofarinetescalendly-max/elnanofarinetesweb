@@ -313,11 +313,13 @@ nav.scrolled {
 }
 /* Idiomes */
 .idioma-mobile {
-  display: none; /* ocult per defecte (desktop) */
+  display: block; /* ocult per defecte (desktop) */
+  padding: 0.5rem 0;
+  text-align: left;
 }
 
 .idioma-desktop {
-  display: flex; /* visible en desktop */
+  display: none; /* visible en desktop */
 }
 
 /* En mòbil → canviem la visibilitat */
