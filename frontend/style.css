@@ -48,6 +48,18 @@ nav .idioma {
   display: flex;
   gap: 0.3rem;
 }
+/* NAV base: transparent (es veu bé sobre el hero) */
+nav {
+  background: transparent;
+  transition: background 0.25s ease, -webkit-backdrop-filter 0.25s ease, backdrop-filter 0.25s ease;
+}
+/* En fer scroll: fondut + blur premium */
+nav.scrolled {
+  background: rgba(124, 94, 60, 0.82);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(8px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
 /* 🏞️ Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
@@ -253,6 +265,7 @@ footer .social-icons a:hover {
   top: 9px; /* 👉 també al centre */
 }
 /* Mostrar només en mòbil */
+/* --- Mòbil --- */
 @media (max-width: 768px) {
   .menu-toggle {
     display: flex;
@@ -267,41 +280,23 @@ footer .social-icons a:hover {
     top: 100%;
     right: 1rem;
     border-radius: 8px;
-    padding: 1rem;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
-  /* 2️⃣ Menú en mòbil més compacte */
-@media (max-width: 768px) {
-  nav ul {
-    position: absolute;
-    top: 100%;
-    right: 1rem;
-    display: none;
-    flex-direction: column;
-    background: rgba(124, 94, 60, 0.95);
-    backdrop-filter: blur(8px);
-    border-radius: 8px;
-    padding: 0.5rem 1rem; /* 👉 menys padding */
+    padding: 0.5rem 1rem; /* compacte */
     min-width: 160px;
   }
 
-  nav ul li {
-    padding: 0.5rem 0; /* 👉 menys alçada per element */
-    text-align: left;
-  }
-
   nav ul.active {
     display: flex;
   }
+
+  nav ul li {
+    padding: 0.5rem 0; /* menys alçada */
+    text-align: left;
+  }
 }
 
-/* 3️⃣ Navbar amb fons translúcid i blur en scroll */
-  nav.scrolled {
-    background: rgba(124, 94, 60, 0.85); /* fons més lleuger */
-    backdrop-filter: blur(6px);          /* efecte vidre */
-    transition: background 0.3s ease, backdrop-filter 0.3s ease;
-  }
+/* --- Navbar en scroll (PC + mòbil) --- */
+nav.scrolled {
+  background: rgba(124, 94, 60, 0.85);
+  backdrop-filter: blur(6px);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
