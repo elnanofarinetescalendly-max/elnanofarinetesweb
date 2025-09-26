@@ -46,7 +46,22 @@ nav ul li a {
 nav .idioma {
   margin-left: auto; /* empeny idiomes a la dreta del tot */
   display: flex;
-  gap: 0.3rem;
+  gap: 0.5rem;
+  align-items: center;
+}
+nav .idioma button {
+  background: none;      /* sense fons */
+  border: none;          /* sense vora */
+  color: white;          /* text blanc */
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0;            /* elimina padding per defecte */
+  transition: color 0.3s ease;
+}
+
+nav .idioma button:hover {
+  color: #C5E1A5;        /* verd oliva clar en hover */
 }
 /* NAV base: transparent (es veu bé sobre el hero) */
 nav {
