@@ -215,6 +215,7 @@ footer .social-icons a {
 footer .social-icons a:hover {
   color: #6B8E23;
 }
+
 /* Hamburguesa – visible només en mòbil */
 .menu-toggle {
   display: none; /* per defecte no es mostra en desktop */
@@ -254,7 +255,7 @@ footer .social-icons a:hover {
   transform: rotate(-45deg);
   top: 9px; /* 👉 també al centre */
 }
-/* Mostrar només en mòbil */
+
 /* --- Mòbil --- */
 @media (max-width: 768px) {
   .menu-toggle {
@@ -291,27 +292,25 @@ nav.scrolled {
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* En mòbil → canviem la visibilitat */
-/* Estat per defecte (desktop) */
-/* Botons d’idioma – estil modern */
+/* 🌐 Idiomes */
 .idioma-desktop button,
 .idioma-mobile button {
-  all: unset; /* 🔥 elimina estil per defecte del navegador */
+  all: unset; /* 🔥 elimina estil per defecte */
   cursor: pointer;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;       /* forma de píndola */
-  border: 2px solid #fff;     /* vora blanca */
+  border: 2px solid #fff;
   color: #fff;
   font-weight: 600;
   font-size: 0.85rem;
   transition: all 0.3s ease;
-  margin: 0 0.2rem;           /* una mica d’espai entre ells */
+  margin: 0 0.2rem;
 }
 
 /* Hover */
 .idioma-desktop button:hover,
 .idioma-mobile button:hover {
-  background: #6B8E23;        /* verd oliva */
+  background: #6B8E23;
   border-color: #6B8E23;
   color: #fff;
 }
@@ -320,33 +319,17 @@ nav.scrolled {
 .idioma-desktop button.active,
 .idioma-mobile button.active {
   background: #fff;
-  color: #7C5E3C;             /* marró corporatiu */
+  color: #7C5E3C;
   border-color: #fff;
-  
+}
+
 /* En mòbil */
 @media (max-width: 768px) {
   .idioma-desktop {
-    display: none; /* ocultem la de dalt */
+    display: none;
   }
   .idioma-mobile {
     display: block;
     text-align: left;
-  }
-
-  .idioma-mobile button {
-    background: transparent;
-    border: 2px solid #fff; 
-    color: #fff;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 0.3rem 0.9rem;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-  }
-
-  .idioma-mobile button:hover {
-    background: #6B8E23;
-    border-color: #6B8E23;
   }
 }
