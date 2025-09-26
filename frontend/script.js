@@ -70,4 +70,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('llista-tallers').innerHTML =
             "<p>No s'han pogut carregar els tallers en aquest moment.</p>";
     }
+    // Navbar amb efecte scroll
+    window.addEventListener("scroll", () => {
+      const nav = document.querySelector("nav");
+      if (window.scrollY > 50) {
+        nav.classList.add("scrolled");
+      } else {
+        nav.classList.remove("scrolled");
+      }
 });
