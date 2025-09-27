@@ -1,1 +1,94 @@
+import express from "express";
+import jwt from "jsonwebtoken";
+
+const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
+
+// 👉 Middleware que comprova si l’usuari és admin
+function requireAdmin(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ error: "No autenticat" });
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ error: "No autoritzat" });
+    }
+    req.user = decoded;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Sessió invàlida o expirada" });
+  }
+}
+
+// 🟢 GET /api/admin/products → llistar tots
+router.get("/", requireAdmin, async (req, res) => {
+  try {
+    const products = await req.db.products.findAll(); // 👈 adapta-ho a la teva DB
+    res.json(products);
+  } catch (e) {
+    res.status(500).json({ error: "Error obtenint productes" });
+  }
+});
+
+// 🟢 GET /api/admin/products/:id → un producte
+router.get("/:id", requireAdmin, async (req, res) => {
+  try {
+    const product = await req.db.products.findById(req.params.id);
+    if (!product) return res.status(404).json({ error: "Producte no trobat" });
+    res.json(product);
+  } catch (e) {
+    res.status(500).json({ error: "Error obtenint producte" });
+  }
+});
+
+// 🟡 POST /api/admin/products → crear
+router.post("/", requireAdmin, async (req, res) => {
+  try {
+    const { name_ca, name_es, price_cents, stock, image_url, is_active } = req.body;
+    if (!name_ca || !name_es || price_cents === undefined) {
+      return res.status(400).json({ error: "Falten camps obligatoris" });
+    }
+    const newProduct = await req.db.products.create({
+      name_ca,
+      name_es,
+      price_cents,
+      stock: stock ?? 0,
+      image_url: image_url || null,
+      is_active: is_active ?? true,
+    });
+    res.status(201).json(newProduct);
+  } catch (e) {
+    res.status(500).json({ error: "Error creant producte" });
+  }
+});
+
+// 🔵 PATCH /api/admin/products/:id → editar
+router.patch("/:id", requireAdmin, async (req, res) => {
+  try {
+    const { name_ca, name_es, price_cents, stock, image_url, is_active, toggleActive } = req.body;
+
+    const product = await req.db.products.findById(req.params.id);
+    if (!product) return res.status(404).json({ error: "Producte no trobat" });
+
+    const update = {};
+    if (toggleActive !== undefined) {
+      update.is_active = !product.is_active;
+    } else {
+      if (name_ca !== undefined) update.name_ca = name_ca;
+      if (name_es !== undefined) update.name_es = name_es;
+      if (price_cents !== undefined) update.price_cents = price_cents;
+      if (stock !== undefined) update.stock = stock;
+      if (image_url !== undefined) update.image_url = image_url;
+      if (is_active !== undefined) update.is_active = is_active;
+    }
+
+    const updated = await req.db.products.update(req.params.id, update);
+    res.json(updated);
+  } catch (e) {
+    res.status(500).json({ error: "Error actualitzant producte" });
+  }
+});
+
+export default router;
 
