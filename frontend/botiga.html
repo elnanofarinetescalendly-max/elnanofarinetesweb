@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botiga - El Nano Farinetes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>… (mateixa navbar) …</nav>
+
+  <section class="tallers" style="padding-top:2rem">
+    <h2>Botiga</h2>
+    <div id="grid" class="tallers-container"></div>
+  </section>
+
+  <script>
+  const API = 'https://elnanofarinetes-server.onrender.com';
+  const grid = document.getElementById('grid');
+
+  async function load(){
+    const r = await fetch(`${API}/api/products?active=true`);
+    const items = await r.json();
+    grid.innerHTML = items.map(p=>`
+      <div class="taller-card">
+        <img class="taller-img" src="${p.image_url || 'https://via.placeholder.com/600x400?text=Producte'}" alt="${p.name_ca}">
+        <h3>${p.name_ca}</h3>
+        <p><strong>${(p.price_cents/100).toFixed(2)} €</strong></p>
+        ${p.stock>0 ? `<button onclick='checkout(${JSON.stringify({id:p.id,qty:1}).replace(/"/g,'&quot;')})'>Comprar</button>` : `<p style="color:#b00">Esgotat</p>`}
+      </div>`).join('');
+  }
+
+  async function checkout(item){
+    // POST crea Stripe Checkout Session i retorna URL
+    const r = await fetch(`${API}/api/checkout`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ items:[item], locale:'ca' })
+    });
+    const { url } = await r.json();
+    location.href = url;
+  }
+  load();
+  </script>
+</body>
+</html>
