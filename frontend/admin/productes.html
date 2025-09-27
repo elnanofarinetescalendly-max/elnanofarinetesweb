@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Gestió d'inscrits</title>
+    <title>Gestió de productes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,7 +52,7 @@
     </style>
 </head>
 <body>
-    <h1>Gestió d'inscrits</h1>
+    <h1>Gestió de productes</h1>
 
     <nav>
         <ul>
@@ -61,13 +61,12 @@
             <li><a href="productes.html">Productes</a></li>
         </ul>
     </nav>
-<h2>Productes</h2>
-<div style="margin-bottom:1rem">
+<h2>Gestió de productes</h2>
+<div>
   <button id="btn-refresca">Refresca</button>
   <button id="btn-nou">Nou producte</button>
 </div>
-
-<table id="taula-productes" border="1" cellpadding="6">
+<table id="taula-productes" border="1" cellpadding="6" style="margin-top:1rem; width:100%">
   <thead>
     <tr>
       <th>ID</th><th>Nom (CA)</th><th>Preu (€)</th><th>Stock</th><th>Actiu</th><th>Accions</th>
@@ -76,18 +75,17 @@
   <tbody></tbody>
 </table>
 
-<!-- modal simple crear/editar -->
 <div id="modal-producte" style="display:none; position:fixed; inset:0; background:#0006; align-items:center; justify-content:center;">
   <form id="form-producte" style="background:#fff; padding:1rem; border-radius:8px; min-width:320px">
     <h3 id="titol-modal">Nou producte</h3>
     <input name="id" type="hidden">
     <label>Nom (CA)<br><input name="name_ca" required></label><br><br>
     <label>Nom (ES)<br><input name="name_es" required></label><br><br>
-    <label>Preu (€)<br><input name="price" type="number" step="0.01" min="0" required></label><br><br>
+    <label>Preu (€)<br><input name="price" type="number" step="0.01" required></label><br><br>
     <label>Stock<br><input name="stock" type="number" min="0" required></label><br><br>
     <label>Imatge URL<br><input name="image_url"></label><br><br>
     <label><input type="checkbox" name="is_active" checked> Actiu</label><br><br>
-    <div style="display:flex; gap:.5rem; justify-content:flex-end">
+    <div style="text-align:right">
       <button type="button" id="btn-cancel">Cancel·la</button>
       <button type="submit">Desa</button>
     </div>
@@ -95,78 +93,64 @@
 </div>
 
 <script>
-const API = 'https://elnanofarinetes-server.onrender.com';
-const tb = document.querySelector('#taula-productes tbody');
-const modal = document.querySelector('#modal-producte');
-const form = document.querySelector('#form-producte');
+const API = "https://elnanofarinetes-server.onrender.com";
+const tb = document.querySelector("#taula-productes tbody");
+const modal = document.querySelector("#modal-producte");
+const form = document.querySelector("#form-producte");
 
 const obre = (data={})=>{
   form.reset();
-  document.querySelector('#titol-modal').textContent = data.id ? 'Edita producte' : 'Nou producte';
+  document.querySelector("#titol-modal").textContent = data.id ? "Edita producte" : "Nou producte";
   Object.entries(data).forEach(([k,v])=>{
-    if (k==='is_active') form[k].checked = !!v;
-    else if (form[k]) form[k].value = v ?? '';
+    if (form[k]) form[k].value = v;
+    if (k==="is_active") form[k].checked = !!v;
   });
-  modal.style.display='flex';
-}
-const tanca = ()=> modal.style.display='none';
-document.querySelector('#btn-cancel').onclick = tanca;
-document.querySelector('#btn-nou').onclick = ()=> obre();
+  modal.style.display="flex";
+};
+const tanca = ()=> modal.style.display="none";
+document.querySelector("#btn-cancel").onclick = tanca;
+document.querySelector("#btn-nou").onclick = ()=> obre();
 
 async function llista(){
-  const r = await fetch(`${API}/api/admin/products`, { credentials:'include' });
+  const r = await fetch(`${API}/api/admin/products`, { credentials:"include" });
   const data = await r.json();
   tb.innerHTML = data.map(p=>`
     <tr>
       <td>${p.id}</td>
-      <td>${p.name_ca || ''}</td>
+      <td>${p.name_ca}</td>
       <td>${(p.price_cents/100).toFixed(2)}</td>
       <td>${p.stock}</td>
-      <td>${p.is_active ? '✅' : '❌'}</td>
+      <td>${p.is_active ? "✅" : "❌"}</td>
       <td>
-        <button data-edita='${p.id}'>Edita</button>
-        <button data-toggle='${p.id}'>${p.is_active ? 'Desactiva' : 'Activa'}</button>
+        <button onclick="edita(${p.id})">Edita</button>
       </td>
-    </tr>`).join('');
+    </tr>`).join("");
 }
-document.querySelector('#btn-refresca').onclick = llista;
-
-tb.addEventListener('click', async (e)=>{
-  const id = e.target.dataset.edita || e.target.dataset.toggle;
-  if (!id) return;
-  if (e.target.dataset.edita){
-    const r = await fetch(`${API}/api/admin/products/${id}`, { credentials:'include' });
-    obre(await r.json());
-  } else {
-    await fetch(`${API}/api/admin/products/${id}`, {
-      method:'PATCH', credentials:'include',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ toggleActive:true })
-    });
-    llista();
-  }
-});
-
-form.addEventListener('submit', async (e)=>{
+async function edita(id){
+  const r = await fetch(`${API}/api/admin/products/${id}`, { credentials:"include" });
+  obre(await r.json());
+}
+form.addEventListener("submit", async e=>{
   e.preventDefault();
   const fd = new FormData(form);
+  const id = fd.get("id");
   const body = {
-    name_ca: fd.get('name_ca'),
-    name_es: fd.get('name_es'),
-    price_cents: Math.round(parseFloat(fd.get('price')||'0')*100),
-    stock: parseInt(fd.get('stock')||'0',10),
-    image_url: fd.get('image_url') || null,
+    name_ca: fd.get("name_ca"),
+    name_es: fd.get("name_es"),
+    price_cents: Math.round(parseFloat(fd.get("price"))*100),
+    stock: parseInt(fd.get("stock")),
+    image_url: fd.get("image_url"),
     is_active: form.is_active.checked
   };
-  const id = fd.get('id');
-  const url = id ? `${API}/api/admin/products/${id}` : `${API}/api/admin/products`;
-  const method = id ? 'PATCH' : 'POST';
-
-  await fetch(url,{ method, credentials:'include', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+  await fetch(`${API}/api/admin/products${id?"/"+id:""}`, {
+    method: id ? "PATCH" : "POST",
+    headers:{"Content-Type":"application/json"},
+    credentials:"include",
+    body: JSON.stringify(body)
+  });
   tanca();
   llista();
 });
-
 llista();
 </script>
 
