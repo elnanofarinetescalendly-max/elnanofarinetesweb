@@ -1,17 +1,24 @@
 {
-  "name": "elnanofarinetes_web_complet_admin",
+  "name": "elnanofarinetes-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend per El Nano Farinetes (API tallers, auth i botiga)",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2"
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
