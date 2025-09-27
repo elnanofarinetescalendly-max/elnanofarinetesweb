@@ -3,66 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Botiga - El Nano Farinetes</title>
+  <title>Botiga Online - El Nano Farinetes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 🔝 Navegació -->
   <nav>
     <div class="logo">El Nano Farinetes</div>
     <ul>
-      <li><a href="#qui-soc">Qui sóc</a></li>
-      <li><a href="#tallers">Tallers</a></li>
+      <li><a href="index.html#qui-soc">Qui sóc</a></li>
+      <li><a href="index.html#tallers">Tallers</a></li>
       <li><a href="Calendari.html">Calendari</a></li>
       <li><a href="botiga.html" class="btn-botiga">Botiga Online →</a></li>
-      <!-- Idiomes per a mòbil -->
       <li class="idioma-mobile">
-        <button class="active" onclick="location.href='index.html'">CA</button>
+        <button onclick="location.href='index.html'">CA</button>
         <button onclick="location.href='index-es.html'">ES</button>
       </li>
     </ul>
     <div class="nav-right">
-      <!-- Idiomes per a desktop -->
       <div class="idioma-desktop">
-        <button class="active" onclick="location.href='index.html'">CA</button>
+        <button onclick="location.href='index.html'">CA</button>
         <button onclick="location.href='index-es.html'">ES</button>
       </div>
-      <!-- Menú hamburguesa -->
       <div class="menu-toggle"><span></span><span></span><span></span></div>
     </div>
   </nav>
 
-  <section class="tallers" style="padding-top:2rem">
-    <h2>Botiga</h2>
-    <div id="grid" class="tallers-container"></div>
+  <!-- 🛒 Hero -->
+  <header class="hero hero-small">
+    <div class="hero-content">
+      <h1>Botiga Online</h1>
+      <p>Compra productes de temporada directament del camp</p>
+    </div>
+  </header>
+
+  <!-- 🛒 Productes -->
+  <section class="tallers">
+    <h2>Productes disponibles</h2>
+    <div id="llista-productes" class="tallers-container"></div>
   </section>
 
-  <script>
-  const API = 'https://elnanofarinetes-server.onrender.com';
-  const grid = document.getElementById('grid');
+  <!-- 📩 Footer -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/el_nano_farinetes" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/elnanofarinetes" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>&copy; 2025 El Nano Farinetes</p>
+  </footer>
 
-  async function load(){
-    const r = await fetch(`${API}/api/products?active=true`);
-    const items = await r.json();
-    grid.innerHTML = items.map(p=>`
-      <div class="taller-card">
-        <img class="taller-img" src="${p.image_url || 'https://via.placeholder.com/600x400?text=Producte'}" alt="${p.name_ca}">
-        <h3>${p.name_ca}</h3>
-        <p><strong>${(p.price_cents/100).toFixed(2)} €</strong></p>
-        ${p.stock>0 ? `<button onclick='checkout(${JSON.stringify({id:p.id,qty:1}).replace(/"/g,'&quot;')})'>Comprar</button>` : `<p style="color:#b00">Esgotat</p>`}
-      </div>`).join('');
+  <script>
+  const API = "https://elnanofarinetes-server.onrender.com";
+  const cont = document.getElementById("llista-productes");
+
+  async function carregaProductes() {
+    try {
+      const r = await fetch(`${API}/api/products?active=true`);
+      const data = await r.json();
+      if (!data.length) {
+        cont.innerHTML = "<p>No hi ha productes disponibles actualment.</p>";
+        return;
+      }
+      cont.innerHTML = data.map(p => `
+        <div class="taller-card">
+          <img src="${p.image_url || 'https://via.placeholder.com/400x300?text=Producte'}" 
+               alt="${p.name_ca}" class="taller-img">
+          <h3>${p.name_ca}</h3>
+          <p>${p.description_ca || ""}</p>
+          <p><strong>${(p.price_cents/100).toFixed(2)} €</strong></p>
+          ${p.stock > 0 
+            ? `<button onclick="checkout(${p.id})">Comprar</button>` 
+            : `<p style="color:red">Esgotat</p>`}
+        </div>
+      `).join("");
+    } catch (e) {
+      cont.innerHTML = "<p>Error carregant productes.</p>";
+    }
   }
 
-  async function checkout(item){
-    // POST crea Stripe Checkout Session i retorna URL
+  async function checkout(productId) {
     const r = await fetch(`${API}/api/checkout`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ items:[item], locale:'ca' })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [{ id: productId, qty: 1 }] })
     });
     const { url } = await r.json();
-    location.href = url;
+    window.location = url;
   }
-  load();
+
+  carregaProductes();
   </script>
 </body>
 </html>
