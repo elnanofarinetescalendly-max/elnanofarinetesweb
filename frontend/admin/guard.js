@@ -1,14 +1,28 @@
-// /admin/guard.js
-(async () => {
-  // Opció A (recomanada): backend amb cookie HttpOnly + endpoint /api/auth/me
+// admin/guard.js
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const r = await fetch('https://elnanofarinetes-server.onrender.com/api/auth/me', {
-      credentials: 'include'
+    const res = await fetch("https://elnanofarinetes-server.onrender.com/api/auth/me", {
+      credentials: "include"
     });
-    if (!r.ok) throw 0;
-    const me = await r.json();
-    if (!me || me.role !== 'admin') throw 0;
-  } catch {
-    location.href = '/admin/login.html?next=' + encodeURIComponent(location.pathname);
+
+    if (!res.ok) {
+      // ❌ No autenticat → enviar al login
+      const next = encodeURIComponent(location.pathname + location.search);
+      location.href = `/admin/login.html?next=${next}`;
+      return;
+    }
+
+    const user = await res.json();
+
+    if (user.role !== "admin") {
+      alert("No tens permisos per accedir a aquesta pàgina");
+      location.href = "/";
+    }
+
+    console.log("✅ Sessió vàlida:", user);
+  } catch (err) {
+    console.error("❌ Error comprovant sessió:", err);
+    location.href = "/admin/login.html";
   }
-})();
+});
+
