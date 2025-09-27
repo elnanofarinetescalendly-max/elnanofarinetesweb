@@ -2,61 +2,113 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
-  <title>Login Admin</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Admin</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f6f1e7;
+      font-family: 'Roboto', sans-serif;
+    }
+    .login-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 380px;
+    }
+    .login-box h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      color: #6B8E23;
+      margin-bottom: 1.5rem;
+    }
+    .login-box label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #3e2f1c;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 0.3rem;
+      font-size: 1rem;
+    }
+    .login-box button {
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      border: none;
+      background: #6B8E23;
+      color: white;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .login-box button:hover {
+      background: #557a1f;
+      transform: scale(1.02);
+    }
+    .error {
+      margin-top: 1rem;
+      color: red;
+      text-align: center;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <h1>Accés Admin</h1>
-    <form id="loginForm">
-        <input type="text" id="usuari" placeholder="Usuari" required />
-        <input type="password" id="contrasenya" placeholder="Contrasenya" required />
-        <button type="submit">Entrar</button>
+  <div class="login-box">
+    <h1>Admin Login</h1>
+    <form id="login-form">
+      <label for="email">Usuari o Email</label>
+      <input type="text" id="email" name="email" required>
+
+      <label for="password">Contrasenya</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Entrar</button>
     </form>
-    <p id="missatge"></p>
+    <div class="error" id="error-msg">❌ Credencials incorrectes</div>
+  </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const usuari = document.getElementById('usuari').value;
-            const contrasenya = document.getElementById('contrasenya').value;
-
-            const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/login', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ usuari, contrasenya })
-            });
-
-            if (resposta.ok) {
-                window.location.href = '/admin/dashboard.html'; // o el camí del teu panell
-            } else {
-                const dades = await resposta.json();
-                document.getElementById('missatge').textContent = dades.missatge;
-            }
-        });
-    </script>
-<!-- 🚨 Script del login -->
   <script>
-  document.querySelector('form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value.trim();
-    const password = e.target.password.value;
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
 
-    const r = await fetch('https://elnanofarinetes-server.onrender.com/api/auth/login', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      credentials:'include', // <- cookie HttpOnly
-      body: JSON.stringify({ email, password })
+      try {
+        const r = await fetch("https://elnanofarinetes-server.onrender.com/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // molt important per la cookie HttpOnly
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!r.ok) {
+          document.getElementById("error-msg").style.display = "block";
+          return;
+        }
+
+        const next = new URLSearchParams(location.search).get("next") || "/admin/dashboard.html";
+        location.href = next;
+      } catch (err) {
+        console.error("Error al login:", err);
+        document.getElementById("error-msg").innerText = "⚠️ Error de connexió amb el servidor";
+        document.getElementById("error-msg").style.display = "block";
+      }
     });
-
-    if (!r.ok) {
-      alert('Credencials incorrectes');
-      return;
-    }
-    const next = new URLSearchParams(location.search).get('next') || '/admin/dashboard.html';
-    location.href = next;
-  });
   </script>
 </body>
 </html>
+
