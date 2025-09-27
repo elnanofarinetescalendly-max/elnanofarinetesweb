@@ -1,85 +1,127 @@
 // server/server.js
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
-const fs = require('fs');
-const path = require('path');
+import express from "express";
+import cors from "cors";
+import fs from "fs";
+import path from "path";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 
+const __dirname = path.resolve();
 const app = express();
-app.set('trust proxy', 1);                 // <- necessari a Render
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
-const TALLERS_PATH = path.join(__dirname, 'tallers.json');
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
-// CORS (durant proves permet qualsevol origen). Després limita-ho al domini del teu frontend.
-app.use(cors({ 
-  origin: ['https://elnanofarinetesweb.vercel.app'], 
-  credentials: true }));
-
-app.use(express.json());
-
-// Sessió (cookies cross-site)
-app.use(session({
-  secret: 'clau-super-secreta',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true,                          // Render és HTTPS
-    sameSite: 'none'                       // perquè funcioni des d’un altre domini
-  }
+// 🔓 CORS (posa aquí el domini de Vercel)
+app.use(cors({
+  origin: ["https://elnanofarinetesweb.vercel.app"],
+  credentials: true
 }));
 
-// Helpers tallers
+app.use(express.json());
+app.use(cookieParser());
+
+// -------------------------
+// Helpers tallers (fitxer JSON)
+// -------------------------
+const TALLERS_PATH = path.join(__dirname, "server", "tallers.json");
+
 function carregarTallers() {
   try {
-    const raw = fs.existsSync(TALLERS_PATH) ? fs.readFileSync(TALLERS_PATH, 'utf8').trim() : '[]';
+    const raw = fs.existsSync(TALLERS_PATH) ? fs.readFileSync(TALLERS_PATH, "utf8").trim() : "[]";
     return raw ? JSON.parse(raw) : [];
   } catch (e) {
-    console.error('Error carregant tallers:', e);
+    console.error("Error carregant tallers:", e);
     return [];
   }
 }
-function desaTallers(arr) { fs.writeFileSync(TALLERS_PATH, JSON.stringify(arr, null, 2)); }
+function desaTallers(arr) {
+  fs.writeFileSync(TALLERS_PATH, JSON.stringify(arr, null, 2));
+}
 let tallers = carregarTallers();
 
-// Auth bàsica
-const usuariAdmin = { usuari: 'admin', contrasenya: '1234' };
-function autentificat(req, res, next) { return req.session?.autenticat ? next() : res.status(401).json({ missatge: 'No autoritzat' }); }
-
-// Rutes diagnòstic
-app.get('/', (_req, res) => res.send('API en marxa ✅'));
-app.get('/healthz', (_req, res) => res.json({ ok: true, time: new Date().toISOString() }));
-
-// Login / logout / sessió
-app.post('/api/login', (req, res) => {
-  const { usuari, contrasenya } = req.body || {};
-  if (usuari === usuariAdmin.usuari && contrasenya === usuariAdmin.contrasenya) {
-    req.session.autenticat = true;
-    return res.json({ missatge: 'Login correcte' });
+// -------------------------
+// Middleware auth
+// -------------------------
+function requireAdmin(req, res, next) {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ error: "No autenticat" });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== "admin") return res.status(403).json({ error: "No autoritzat" });
+    req.user = decoded;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Sessió invàlida o expirada" });
   }
-  return res.status(401).json({ missatge: 'Credencials incorrectes' });
-});
-app.post('/api/logout', (req, res) => { req.session.destroy(() => res.json({ missatge: 'Sessió tancada' })); });
-app.get('/api/session', (req, res) => res.status(req.session?.autenticat ? 200 : 401).json({ autenticat: !!req.session?.autenticat }));
+}
 
-// API tallers
-app.get('/api/tallers', (_req, res) => res.json(tallers));
-app.post('/api/tallers', autentificat, (req, res) => {
+// -------------------------
+// Rutes diagnòstic
+// -------------------------
+app.get("/", (_req, res) => res.send("API en marxa ✅"));
+app.get("/healthz", (_req, res) => res.json({ ok: true, time: new Date().toISOString() }));
+
+// -------------------------
+// Autenticació JWT
+// -------------------------
+app.post("/api/auth/login", (req, res) => {
+  const { usuari, contrasenya } = req.body || {};
+  if (usuari === "admin" && contrasenya === "1234") {
+    const token = jwt.sign({ id: 1, role: "admin" }, JWT_SECRET, { expiresIn: "2h" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true, // Render va amb HTTPS
+      sameSite: "lax",
+      maxAge: 2 * 60 * 60 * 1000
+    });
+    return res.json({ success: true });
+  }
+  return res.status(401).json({ error: "Credencials incorrectes" });
+});
+
+app.post("/api/auth/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ success: true });
+});
+
+app.get("/api/auth/me", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ error: "No autenticat" });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.json(decoded);
+  } catch {
+    res.status(401).json({ error: "Sessió invàlida" });
+  }
+});
+
+// -------------------------
+// API Tallers
+// -------------------------
+app.get("/api/tallers", (_req, res) => res.json(tallers));
+
+app.post("/api/tallers", requireAdmin, (req, res) => {
   const { titol, descripcio, data, placesDisponibles, enllacReserva, calendlyUri } = req.body || {};
   const nou = {
     id: Date.now(),
-    titol, descripcio, data,
+    titol,
+    descripcio,
+    data,
     placesDisponibles: parseInt(placesDisponibles) || 0,
-    enllacReserva: enllacReserva || '',
+    enllacReserva: enllacReserva || "",
     calendlyUri: calendlyUri || null,
     inscrits: []
   };
-  tallers.push(nou); desaTallers(tallers);
+  tallers.push(nou);
+  desaTallers(tallers);
   res.status(201).json(nou);
 });
-app.put('/api/tallers/:id', autentificat, (req, res) => {
+
+app.put("/api/tallers/:id", requireAdmin, (req, res) => {
   const id = Number(req.params.id);
   const i = tallers.findIndex(t => t.id === id);
-  if (i === -1) return res.status(404).json({ missatge: 'Taller no trobat' });
+  if (i === -1) return res.status(404).json({ error: "Taller no trobat" });
   const { titol, descripcio, data, placesDisponibles, enllacReserva, inscrits } = req.body || {};
   if (titol !== undefined) tallers[i].titol = titol;
   if (descripcio !== undefined) tallers[i].descripcio = descripcio;
@@ -90,35 +132,77 @@ app.put('/api/tallers/:id', autentificat, (req, res) => {
   desaTallers(tallers);
   res.json(tallers[i]);
 });
-app.delete('/api/tallers/:id', autentificat, (req, res) => {
+
+app.delete("/api/tallers/:id", requireAdmin, (req, res) => {
   const n = tallers.length;
   tallers = tallers.filter(t => t.id !== Number(req.params.id));
-  if (tallers.length === n) return res.status(404).json({ missatge: 'Taller no trobat' });
+  if (tallers.length === n) return res.status(404).json({ error: "Taller no trobat" });
   desaTallers(tallers);
   res.status(204).send();
 });
 
-// Estàtics (public/admin són germanes de server → fem ..)
-  // app.use(express.static(path.join(__dirname, '..', 'public')));
-  // app.use('/admin', express.static(path.join(__dirname, '..', 'admin')));
+// -------------------------
+// API Productes
+// -------------------------
+let products = [
+  { id: 1, name_ca: "Carxofes", name_es: "Alcachofas", price_cents: 450, stock: 10, is_active: true },
+  { id: 2, name_ca: "Calçots", name_es: "Calçots", price_cents: 600, stock: 5, is_active: true }
+];
 
-// 404
-app.use((req, res) => {
-  if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'Not found' });
-  res.status(404).send('Not found');
+// Públic
+app.get("/api/products", (_req, res) => {
+  res.json(products.filter(p => p.is_active));
 });
 
-app.listen(PORT, () => console.log(`Servidor actiu al port ${PORT}`));
-// 📩 Webhook de Calendly
-app.post('/api/webhook/calendly', (req, res) => {
+// Admin CRUD
+app.get("/api/admin/products", requireAdmin, (_req, res) => res.json(products));
+
+app.get("/api/admin/products/:id", requireAdmin, (req, res) => {
+  const p = products.find(x => x.id === Number(req.params.id));
+  if (!p) return res.status(404).json({ error: "Producte no trobat" });
+  res.json(p);
+});
+
+app.post("/api/admin/products", requireAdmin, (req, res) => {
+  const { name_ca, name_es, price_cents, stock, image_url, is_active } = req.body;
+  const nou = {
+    id: Date.now(),
+    name_ca, name_es,
+    price_cents,
+    stock,
+    image_url: image_url || null,
+    is_active: is_active ?? true
+  };
+  products.push(nou);
+  res.status(201).json(nou);
+});
+
+app.patch("/api/admin/products/:id", requireAdmin, (req, res) => {
+  const id = Number(req.params.id);
+  const p = products.find(x => x.id === id);
+  if (!p) return res.status(404).json({ error: "Producte no trobat" });
+  const { name_ca, name_es, price_cents, stock, image_url, is_active, toggleActive } = req.body;
+  if (toggleActive !== undefined) p.is_active = !p.is_active;
+  if (name_ca !== undefined) p.name_ca = name_ca;
+  if (name_es !== undefined) p.name_es = name_es;
+  if (price_cents !== undefined) p.price_cents = price_cents;
+  if (stock !== undefined) p.stock = stock;
+  if (image_url !== undefined) p.image_url = image_url;
+  if (is_active !== undefined) p.is_active = is_active;
+  res.json(p);
+});
+
+// -------------------------
+// Webhook Calendly
+// -------------------------
+app.post("/api/webhook/calendly", (req, res) => {
   try {
     const event = req.body;
     console.log("Webhook rebut:", JSON.stringify(event, null, 2));
 
     if (event.event === "invitee.created") {
-      const eventUri = event.payload.event; // URI de l'esdeveniment de Calendly
+      const eventUri = event.payload.event;
       const nom = event.payload.name || event.payload.email;
-
       const index = tallers.findIndex(t => t.calendlyUri === eventUri);
       if (index !== -1 && tallers[index].placesDisponibles > 0) {
         tallers[index].placesDisponibles--;
@@ -130,7 +214,6 @@ app.post('/api/webhook/calendly', (req, res) => {
     if (event.event === "invitee.canceled") {
       const eventUri = event.payload.event;
       const email = event.payload.email;
-
       const index = tallers.findIndex(t => t.calendlyUri === eventUri);
       if (index !== -1) {
         tallers[index].placesDisponibles++;
@@ -146,88 +229,10 @@ app.post('/api/webhook/calendly', (req, res) => {
   }
 });
 
-
-const CALENDLY_TOKEN = process.env.CALENDLY_TOKEN; // 👈 posa’l a Render com a secret
-const ORGANIZATION = "https://api.calendly.com/scheduled_events?organization=https://api.calendly.com/organizations/361ec01e-2b96-429b-9a42-bf29871ac073"; // 👈 el teu
-
-async function syncCalendly() {
-  try {
-    const res = await fetch(`https://api.calendly.com/scheduled_events?organization=${encodeURIComponent(ORGANIZATION)}`, {
-      headers: {
-        "Authorization": `Bearer ${CALENDLY_TOKEN}`,
-        "Content-Type": "application/json"
-      }
-    });
-
-    const data = await res.json();
-
-    if (data.collection) {
-      console.log("📅 Esdeveniments de Calendly trobats:", data.collection.length);
-
-      data.collection.forEach(ev => {
-        const titol = ev.name;
-        const dataEv = ev.start_time.split("T")[0];
-
-        // Buscar si existeix al JSON de tallers
-        const index = tallers.findIndex(t => t.calendlyUri && ev.uri.includes(t.calendlyUri));
-        if (index !== -1) {
-          // 👇 Exemple: marcar que almenys hi ha una reserva
-          tallers[index].inscrits = tallers[index].inscrits || [];
-          if (!tallers[index].inscrits.includes("Calendly")) {
-            tallers[index].inscrits.push("Calendly");
-            if (tallers[index].placesDisponibles > 0) {
-              tallers[index].placesDisponibles--;
-            }
-            desaTallers(tallers);
-          }
-        }
-      });
-    }
-  } catch (err) {
-    console.error("❌ Error sincronitzant amb Calendly:", err);
-  }
-}
-// Executa cada 5 minuts
-setInterval(syncCalendly, 5 * 60 * 1000);
-
-// Opcional: sincronitzar un cop en arrencar
-syncCalendly();
-
-import express from "express";
-import authRoutes from "./authRoutes.js"; // 👈 importa'l
-import cookieParser from "cookie-parser";
-
-const app = express();
-app.use(express.json());
-app.use(cookieParser());
-
-// Middleware per simular DB (substitueix-ho per la teva connexió real)
-app.use((req, res, next) => {
-  req.db = {
-    users: {
-      findOne: async ({ email }) => {
-        // 🔧 Exemple d'usuari fix -> canvia-ho per DB real
-        if (email === "admin@elnanofarinetes.com") {
-          return {
-            id: 1,
-            email,
-            role: "admin",
-            passwordHash: await bcrypt.hash("secret123", 10)
-          };
-        }
-        return null;
-      }
-    }
-  };
-  next();
-});
-
-// Rutes d'autenticació
-app.use("/api/auth", authRoutes);
-
-app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
-
-
+// -------------------------
+// Arrencar
+// -------------------------
+app.listen(PORT, () => console.log(`✅ Servidor actiu al port ${PORT}`));
 
 
 
