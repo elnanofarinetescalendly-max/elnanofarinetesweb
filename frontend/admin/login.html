@@ -36,6 +36,27 @@
             }
         });
     </script>
+<!-- 🚨 Script del login -->
+  <script>
+  document.querySelector('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value;
 
+    const r = await fetch('https://elnanofarinetes-server.onrender.com/api/auth/login', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      credentials:'include', // <- cookie HttpOnly
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!r.ok) {
+      alert('Credencials incorrectes');
+      return;
+    }
+    const next = new URLSearchParams(location.search).get('next') || '/admin/dashboard.html';
+    location.href = next;
+  });
+  </script>
 </body>
 </html>
