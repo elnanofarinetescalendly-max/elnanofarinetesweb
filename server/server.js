@@ -193,6 +193,41 @@ setInterval(syncCalendly, 5 * 60 * 1000);
 // Opcional: sincronitzar un cop en arrencar
 syncCalendly();
 
+import express from "express";
+import authRoutes from "./authRoutes.js"; // 👈 importa'l
+import cookieParser from "cookie-parser";
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+
+// Middleware per simular DB (substitueix-ho per la teva connexió real)
+app.use((req, res, next) => {
+  req.db = {
+    users: {
+      findOne: async ({ email }) => {
+        // 🔧 Exemple d'usuari fix -> canvia-ho per DB real
+        if (email === "admin@elnanofarinetes.com") {
+          return {
+            id: 1,
+            email,
+            role: "admin",
+            passwordHash: await bcrypt.hash("secret123", 10)
+          };
+        }
+        return null;
+      }
+    }
+  };
+  next();
+});
+
+// Rutes d'autenticació
+app.use("/api/auth", authRoutes);
+
+app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
+
+
 
 
 
