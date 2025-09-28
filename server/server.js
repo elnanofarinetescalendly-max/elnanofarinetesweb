@@ -1,10 +1,10 @@
+// server/server.js
 import express from "express";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 const __dirname = path.resolve();
 const app = express();
@@ -12,12 +12,18 @@ app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
-// 🔓 CORS (posa aquí el domini de Vercel)
+// 🔓 CORS (només permet el frontend de Vercel)
 app.use(cors({
-  origin: true,
+  origin: "https://elnanofarinetesweb.vercel.app",
   credentials: true
 }));
-app.options("*", cors()); // preflight
+
+// Preflight
+app.options("*", cors({
+  origin: "https://elnanofarinetesweb.vercel.app",
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,8 +34,7 @@ const adminUser = {
   id: 1,
   email: "admin@elnanofarinetes.com",
   role: "admin",
-  // Hash de "1234" generat amb bcrypt (cost=10)
-  passwordHash: "$2b$10$1gGVrxOGD9Kmt8vXZOr/auUePfr6EqPSmbizp1tM4LpTZ6gFTwNRu"
+  password: "1234" // ⚠️ en prod posa-ho hash i a una DB
 };
 
 // -------------------------
@@ -76,51 +81,26 @@ app.get("/healthz", (_req, res) => res.json({ ok: true, time: new Date().toISOSt
 // -------------------------
 // Autenticació JWT
 // -------------------------
-/* app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password) return res.status(400).json({ error: "Falten camps" });
 
-  // comprovar si email coincideix amb l’admin
-  if (email !== adminUser.email) {
+  if (email !== adminUser.email || password !== adminUser.password) {
     return res.status(401).json({ error: "Credencials incorrectes" });
   }
 
-  // validar contrasenya amb bcrypt
-  const ok = await bcrypt.compare(password, adminUser.passwordHash);
-  if (!ok) {
-    return res.status(401).json({ error: "Credencials incorrectes" });
-  }
-
-  // generar JWT
   const token = jwt.sign({ id: adminUser.id, role: adminUser.role }, JWT_SECRET, { expiresIn: "2h" });
-  
+
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    path: "/", // 👈 important perquè sigui global
     maxAge: 2 * 60 * 60 * 1000
   });
-  return res.json({ success: true });
-});*/
-app.post("/api/auth/login", async (req, res) => {
-  const { email, password } = req.body || {};
-  if (!email || !password) return res.status(400).json({ error: "Falten camps" });
 
-  // Validació directa (sense bcrypt)
-  if (email !== "admin@elnanofarinetes.com" || password !== "1234") {
-    return res.status(401).json({ error: "Credencials incorrectes" });
-  }
-
-  const token = jwt.sign({ id: 1, role: "admin" }, JWT_SECRET, { expiresIn: "2h" });
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 2 * 60 * 60 * 1000
-  });
   return res.json({ success: true });
 });
-
 
 app.post("/api/auth/logout", (req, res) => {
   res.clearCookie("token", {
@@ -129,7 +109,7 @@ app.post("/api/auth/logout", (req, res) => {
     sameSite: "none",
     path: "/"
   });
-  res.json({ success: true, token });
+  res.json({ success: true });
 });
 
 app.get("/api/auth/me", (req, res) => {
@@ -240,26 +220,9 @@ app.patch("/api/admin/products/:id", requireAdmin, (req, res) => {
 });
 
 // -------------------------
-// Webhook Calendly
-// -------------------------
-app.post("/api/webhook/calendly", (req, res) => {
-  try {
-    const event = req.body;
-    console.log("Webhook rebut:", JSON.stringify(event, null, 2));
-    // ... el teu codi de gestió
-    res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error("Error webhook:", err);
-    res.status(500).json({ error: "Error processant webhook" });
-  }
-});
-
-// -------------------------
 // Arrencar
 // -------------------------
 app.listen(PORT, () => console.log(`✅ Servidor actiu al port ${PORT}`));
-
-
 
 
 
