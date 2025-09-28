@@ -76,7 +76,7 @@ app.get("/healthz", (_req, res) => res.json({ ok: true, time: new Date().toISOSt
 // -------------------------
 // Autenticació JWT
 // -------------------------
-app.post("/api/auth/login", async (req, res) => {
+/* app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password) return res.status(400).json({ error: "Falten camps" });
 
@@ -101,7 +101,26 @@ app.post("/api/auth/login", async (req, res) => {
     maxAge: 2 * 60 * 60 * 1000
   });
   return res.json({ success: true });
+});*/
+app.post("/api/auth/login", async (req, res) => {
+  const { email, password } = req.body || {};
+  if (!email || !password) return res.status(400).json({ error: "Falten camps" });
+
+  // Validació directa (sense bcrypt)
+  if (email !== "admin@elnanofarinetes.com" || password !== "1234") {
+    return res.status(401).json({ error: "Credencials incorrectes" });
+  }
+
+  const token = jwt.sign({ id: 1, role: "admin" }, JWT_SECRET, { expiresIn: "2h" });
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    maxAge: 2 * 60 * 60 * 1000
+  });
+  return res.json({ success: true });
 });
+
 
 app.post("/api/auth/logout", (req, res) => {
   res.clearCookie("token", {
