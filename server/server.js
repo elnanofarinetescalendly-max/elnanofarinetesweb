@@ -35,7 +35,7 @@ const adminUser = {
 // -------------------------
 // Helpers tallers (fitxer JSON)
 // -------------------------
-const TALLERS_PATH = path.join(__dirname, "server", "tallers.json");
+const TALLERS_PATH = path.join(__dirname, "tallers.json");
 
 function carregarTallers() {
   try {
