@@ -16,8 +16,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 app.use(cors({
   origin: ["https://elnanofarinetesweb.vercel.app"],
   credentials: true
-  methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.options("*", cors()); // preflight
 app.use(express.json());
