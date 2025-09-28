@@ -14,7 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 // 🔓 CORS (posa aquí el domini de Vercel)
 app.use(cors({
-  origin: ["https://elnanofarinetesweb.vercel.app"],
+  origin: true,
   credentials: true
 }));
 app.options("*", cors()); // preflight
