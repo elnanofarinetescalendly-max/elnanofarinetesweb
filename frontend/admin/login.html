@@ -90,7 +90,8 @@
       const r = await fetch("https://elnanofarinetes-server.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        mode: "cors",                // 👈 afegit
+        credentials: "include",      // 👈 ja el tens
         body: JSON.stringify({ email, password })
       });
 
