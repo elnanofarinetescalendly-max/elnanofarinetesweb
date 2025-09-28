@@ -16,8 +16,10 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 app.use(cors({
   origin: ["https://elnanofarinetesweb.vercel.app"],
   credentials: true
+  methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
+app.options("*", cors()); // preflight
 app.use(express.json());
 app.use(cookieParser());
 
@@ -93,18 +95,24 @@ app.post("/api/auth/login", async (req, res) => {
 
   // generar JWT
   const token = jwt.sign({ id: adminUser.id, role: adminUser.role }, JWT_SECRET, { expiresIn: "2h" });
+  
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
     maxAge: 2 * 60 * 60 * 1000
   });
   return res.json({ success: true });
 });
 
 app.post("/api/auth/logout", (req, res) => {
-  res.clearCookie("token");
-  res.json({ success: true });
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/"
+  });
+  res.json({ success: true, token });
 });
 
 app.get("/api/auth/me", (req, res) => {
