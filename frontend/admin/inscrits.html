@@ -1,159 +1,146 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestió d'inscrits</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-            nav ul li a {
-                text-decoration: none;
-                background-color: #444;
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-            }
-
-                nav ul li a:hover {
-                    background-color: #666;
-                }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-            gap: 1rem;
-        }
-
-        input, select {
-            padding: 0.5rem;
-            font-size: 1rem;
-        }
-
-        button {
-            padding: 0.5rem;
-            font-size: 1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-    </style>
-    <!-- 🚨 Script de protecció -->
+  <meta charset="UTF-8">
+  <title>Gestió d'inscrits</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f6f1e7; }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav ul li a {
+      text-decoration: none;
+      background-color: #444;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    nav ul li a:hover {
+      background-color: #666;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      gap: 1rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    input, select { padding: 0.5rem; font-size: 1rem; }
+    button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      background-color: #7c5e3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #5a4129; }
+  </style>
+  <!-- 🚨 Protecció -->
   <script defer src="guard.js"></script>
 </head>
 <body>
-    <h1>Gestió d'inscrits</h1>
+  <h1>Gestió d'inscrits</h1>
 
-    <nav>
-        <ul>
-            <li><a href="dashboard.html">Crear tallers</a></li>
-            <li><a href="inscrits.html">Gestió d'inscrits</a></li>
-            <li><a href="productes.html">Productes</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Crear tallers</a></li>
+      <li><a href="inscrits.html">Gestió d'inscrits</a></li>
+      <li><a href="productes.html">Productes</a></li>
+    </ul>
+  </nav>
 
-    <form id="formInscripcio">
-        <label for="tallerId">Taller:</label>
-        <select id="tallerId" name="tallerId" required>
-            <!-- Tallers es carregaran automàticament -->
-        </select>
+  <form id="formInscripcio">
+    <label for="tallerId">Taller:</label>
+    <select id="tallerId" name="tallerId" required></select>
 
-        <label for="nom">Nom de la persona:</label>
-        <input type="text" id="nom" placeholder="Nom" required>
+    <label for="nom">Nom de la persona:</label>
+    <input type="text" id="nom" placeholder="Nom" required>
 
-        <button type="submit">Afegir inscripció</button>
-    </form>
+    <button type="submit">Afegir inscripció</button>
+  </form>
 
-    <script>
-        async function carregarTallers() {
-            const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers',{
-                credentials:"include"
-            });
-            const tallers = await resposta.json();
-            const select = document.getElementById('tallerId');
-            tallers.forEach(taller => {
-                const option = document.createElement('option');
-                option.value = taller.id;
-                option.textContent = `${taller.titol} (${taller.data}) - ${taller.placesDisponibles} places`;
-                select.appendChild(option);
-            });
-        }
-async function afegirInscripcio(event) {
-    event.preventDefault();
-    const id = parseInt(document.getElementById('tallerId').value);
-    const nom = document.getElementById('nom').value;
+  <script>
+    async function carregarTallers() {
+      const resposta = await fetch("https://elnanofarinetes-server.onrender.com/api/tallers", {
+        credentials: "include"
+      });
+      const tallers = await resposta.json();
+      const select = document.getElementById("tallerId");
+      select.innerHTML = "";
 
-    const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers',{
-        credentials:"include"
-    });
-    const tallers = await resposta.json();
+      if (!tallers.length) {
+        const option = document.createElement("option");
+        option.textContent = "No hi ha tallers disponibles";
+        option.disabled = true;
+        option.selected = true;
+        select.appendChild(option);
+        return;
+      }
 
-    let inscripcioFeta = false;
+      tallers.forEach(taller => {
+        const option = document.createElement("option");
+        option.value = taller.id;
+        option.textContent = `${taller.titol} (${taller.data}) - ${taller.placesDisponibles} places`;
+        select.appendChild(option);
+      });
+    }
 
-    const actualitzat = tallers.map(taller => {
+    async function afegirInscripcio(event) {
+      event.preventDefault();
+      const id = parseInt(document.getElementById("tallerId").value);
+      const nom = document.getElementById("nom").value;
+
+      const resposta = await fetch("https://elnanofarinetes-server.onrender.com/api/tallers", {
+        credentials: "include"
+      });
+      const tallers = await resposta.json();
+
+      let inscripcioFeta = false;
+      const actualitzat = tallers.map(taller => {
         if (taller.id === id) {
-            if (taller.placesDisponibles > 0) {
-                taller.placesDisponibles--;
-                if (!taller.inscrits) taller.inscrits = [];
-                taller.inscrits.push(nom);
-                inscripcioFeta = true;
-            }
+          if (taller.placesDisponibles > 0) {
+            taller.placesDisponibles--;
+            if (!taller.inscrits) taller.inscrits = [];
+            taller.inscrits.push(nom);
+            inscripcioFeta = true;
+          }
         }
         return taller;
-    });
+      });
 
-    if (!inscripcioFeta) {
+      if (!inscripcioFeta) {
         alert("Aquest taller ja no té places disponibles!");
-        await carregarTallers();  // Actualitzem el desplegable
+        await carregarTallers();
         return;
-    }
+      }
 
-    const tallerActualitzat = actualitzat.find(t => t.id === id);
+      const tallerActualitzat = actualitzat.find(t => t.id === id);
 
-    await fetch(`https://elnanofarinetes-server.onrender.com/api/tallers/${id}`, {
-        method: 'PUT',
-        credentials:"include",
-        headers: { 'Content-Type': 'application/json' },
+      await fetch(`https://elnanofarinetes-server.onrender.com/api/tallers/${id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tallerActualitzat)
-    });
+      });
 
-    alert(`Inscripció afegida per a ${nom}`);
-    document.getElementById('formInscripcio').reset();
-    await carregarTallers(); // Torna a carregar el select per mostrar les places actualitzades
-}
-
-    async function carregarTallers() {
-        const resposta = await fetch('https://elnanofarinetes-server.onrender.com/api/tallers', {
-            credentials: 'include'});
-        const tallers = await resposta.json();
-        const select = document.getElementById('tallerId');
-        select.innerHTML = ''; // Neteja el desplegable abans d'omplir-lo de nou
-        tallers.forEach(taller => {
-            const option = document.createElement('option');
-            option.value = taller.id;
-            option.textContent = `${taller.titol} (${taller.data}) - ${taller.placesDisponibles} places`;
-            select.appendChild(option);
-        });
+      alert(`Inscripció afegida per a ${nom}`);
+      document.getElementById("formInscripcio").reset();
+      await carregarTallers();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        carregarTallers(); // Carrega els tallers al desplegable
-        document.getElementById('formInscripcio').addEventListener('submit', afegirInscripcio);
+    document.addEventListener("DOMContentLoaded", () => {
+      carregarTallers();
+      document.getElementById("formInscripcio").addEventListener("submit", afegirInscripcio);
     });
-
-        
-</script>
+  </script>
 </body>
 </html>
