@@ -19,7 +19,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   z-index: 1000;
 }
 
@@ -37,6 +37,9 @@ nav .logo a {
   font-weight: bold;
   color: white;
   text-decoration: none; /* ❌ treu el blau/subratllat */
+  display: flex;
+  align-items: center;  /* centra el text dins el contenidor */
+  line-height: 1;
 }
 
 nav ul {
