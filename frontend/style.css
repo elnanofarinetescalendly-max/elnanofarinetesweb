@@ -63,6 +63,19 @@ nav .btn-botiga:hover {
   background: #6B8E23;       /* verd oliva en hover */
   color: #fff;
 }
+.btn-botiga {
+  background: #7C5E3C;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-botiga:hover {
+  background: #6B4F32;
+}
 
 /* 🏞️ Hero */
 .hero {
