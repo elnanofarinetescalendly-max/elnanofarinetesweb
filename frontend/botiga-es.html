@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Online - El Nano Farinetes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 🔝 Navegació -->
+  <nav>
+    <div class="logo">El Nano Farinetes</div>
+    <ul>
+      <li><a href="index-es.html#qui-soc">Quién soy</a></li>
+      <li><a href="index-es.html#tallers">Talleres</a></li>
+      <li><a href="Calendario.html">Calendario</a></li>
+      <li><a href="botiga-es.html" class="btn-botiga">🛒 Tienda</a></li>
+      <li class="idioma-mobile">
+        <button onclick="location.href='botiga.html'">CA</button>
+        <button onclick="location.href='botiga-es.html'">ES</button>
+      </li>
+    </ul>
+    <div class="nav-right">
+      <div class="idioma-desktop">
+        <button onclick="location.href='botiga.html'">CA</button>
+        <button onclick="location.href='botiga-es.html'">ES</button>
+      </div>
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- 🛒 Hero -->
+  <header class="hero hero-small">
+    <div class="hero-content">
+      <h1>Tienda Online</h1>
+      <p>Compra productos de temporada directamente del campo</p>
+    </div>
+  </header>
+
+  <!-- 🛒 Productos -->
+  <section class="tallers">
+    <h2>Productos disponibles</h2>
+    <div id="llista-productes" class="tallers-container"></div>
+  </section>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/el_nano_farinetes" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/elnanofarinetes" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
+      <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>&copy; 2025 El Nano Farinetes</p>
+  </footer>
+
+  <script>
+  const API = "https://elnanofarinetes-server.onrender.com";
+  const cont = document.getElementById("llista-productes");
+
+  async function carregaProductes() {
+    try {
+      const r = await fetch(`${API}/api/products?active=true`);
+      const data = await r.json();
+      if (!data.length) {
+        cont.innerHTML = "<p>No hay productos disponibles actualmente.</p>";
+        return;
+      }
+      cont.innerHTML = data.map(p => `
+        <div class="taller-card">
+          <img src="${p.image_url || 'https://via.placeholder.com/400x300?text=Producto'}" 
+               alt="${p.name_es}" class="taller-img">
+          <h3>${p.name_es}</h3>
+          <p>${p.description_es || ""}</p>
+          <p><strong>${(p.price_cents/100).toFixed(2)} €</strong></p>
+          ${p.stock > 0 
+            ? `<button onclick="checkout(${p.id})">Comprar</button>` 
+            : `<p style="color:red">Agotado</p>`}
+        </div>
+      `).join("");
+    } catch (e) {
+      cont.innerHTML = "<p>Error cargando productos.</p>";
+    }
+  }
+
+  async function checkout(productId) {
+    const r = await fetch(`${API}/api/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [{ id: productId, qty: 1 }] })
+    });
+    const { url } = await r.json();
+    window.location = url;
+  }
+
+  carregaProductes();
+  </script>
+</body>
+</html>
 
