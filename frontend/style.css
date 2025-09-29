@@ -48,17 +48,17 @@ nav ul li a {
   align-items: center;
   gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
 }
-/* Botó Botiga Online */
+/* Botiga Online – Desktop */
 .btn-botiga {
   background: #7C5E3C;
   color: white;
   padding: 0.5rem 1.2rem;
-  border-radius: 999px; /* píndola */
+  border-radius: 999px;
   text-decoration: none;
   font-weight: bold;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem; /* espai entre text i fletxa */
+  gap: 0.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
@@ -71,14 +71,36 @@ nav ul li a {
 
 .btn-botiga:hover {
   background: #6B4F32;
-  box-shadow: 0 6px 16px rgba(107, 142, 35, 0.6); /* glow verd */
-  transform: translateY(-2px); /* petit efecte d’aixecar-se */
+  box-shadow: 0 6px 16px rgba(107, 142, 35, 0.6);
+  transform: translateY(-2px);
 }
 
 .btn-botiga:hover::after {
-  transform: translateX(6px); /* mou la fletxa */
+  transform: translateX(6px);
 }
 
+/* Versió mòbil → que ocupi tot l’ample */
+.botiga-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .botiga-desktop {
+    display: none; /* amaguem botiga a la dreta */
+  }
+
+  .botiga-mobile {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .botiga-mobile .btn-botiga {
+    display: block;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
 
 /* 🏞️ Hero */
 .hero {
