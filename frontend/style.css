@@ -1,4 +1,6 @@
-/* Tipografies */
+/* ---------------------------
+   Tipografies
+--------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@400;700&display=swap');
 
 body {
@@ -10,24 +12,32 @@ body {
   line-height: 1.6;
 }
 
-/* 🔝 Navegació */
+/* ---------------------------
+   🔝 Navbar
+--------------------------- */
 nav {
   position: sticky;
   top: 0;
-  background: rgba(124, 94, 60, 0.95); /* 👈 semi transparent */
-  backdrop-filter: blur(6px);          /* 👈 efecte difuminat */
+  background: #7C5E3C;
   color: white;
   display: flex;
-  align-items: center;  /* ✅ centra verticalment */
+  align-items: center;
   justify-content: space-between;
   padding: 0.8rem 2rem;
   z-index: 1000;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Transparent en scroll */
+nav.scrolled {
+  background: rgba(124, 94, 60, 0.9);
+  backdrop-filter: blur(6px);
 }
 
 /* 📌 Esquerra */
 .nav-left {
   display: flex;
-  align-items: center; /* ✅ centra logo + menú */
+  align-items: center;
   gap: 2rem;
 }
 
@@ -37,7 +47,7 @@ nav .logo a {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
-  text-decoration: none; 
+  text-decoration: none;
   display: flex;
   align-items: center;
   line-height: 1;
@@ -69,7 +79,9 @@ nav ul li a {
   gap: 1.5rem;
 }
 
-/* Idiomes */
+/* ---------------------------
+   Idiomes
+--------------------------- */
 .idioma-desktop button,
 .idioma-mobile button {
   all: unset;
@@ -98,7 +110,9 @@ nav ul li a {
   border-color: #fff;
 }
 
-/* Botó botiga amb fletxa → */
+/* ---------------------------
+   Botó botiga
+--------------------------- */
 .btn-botiga {
   padding: 0.5rem 1.2rem;
   background: #4a3c2c;
@@ -107,7 +121,6 @@ nav ul li a {
   font-weight: bold;
   text-decoration: none;
   transition: all 0.3s ease;
-  position: relative;
 }
 
 .btn-botiga::after {
@@ -117,10 +130,11 @@ nav ul li a {
 
 .btn-botiga:hover {
   background: #6B8E23;
-  transform: scale(1.05);
 }
 
-/* Hamburguesa (només mòbil) */
+/* ---------------------------
+   Hamburguesa (només mòbil)
+--------------------------- */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -142,6 +156,7 @@ nav ul li a {
   position: absolute;
   left: 0;
 }
+
 .menu-toggle span:nth-child(1) { top: 0; }
 .menu-toggle span:nth-child(2) { top: 9px; }
 .menu-toggle span:nth-child(3) { top: 18px; }
@@ -205,10 +220,12 @@ nav ul li a {
   }
 }
 
-/* 🔝 Hero */
+/* ---------------------------
+   🏞️ Hero
+--------------------------- */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
-  min-height: 80vh; /* ocupa bona part de la pantalla a la home */
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,30 +233,35 @@ nav ul li a {
   color: white;
   position: relative;
 }
+
 .hero-small {
-  min-height: 40vh; /* per a subpàgines (Calendari, Botiga…) */
+  min-height: 40vh;
 }
+
 .hero::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.4);
 }
+
 .hero-content {
   position: relative;
   z-index: 1;
   max-width: 800px;
 }
+
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
 .hero p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
-/* Botó principal CTA */
+
 .hero .cta {
   padding: 1rem 2rem;
   background-color: #6B8E23;
@@ -248,15 +270,17 @@ nav ul li a {
   font-size: 1.2rem;
   cursor: pointer;
   border-radius: 8px;
-  font-weight: bold;
   transition: all 0.3s ease;
 }
+
 .hero .cta:hover {
   background-color: #557a1f;
   transform: scale(1.05);
 }
 
-/* 👤 Qui sóc */
+/* ---------------------------
+   👤 Qui sóc
+--------------------------- */
 .qui-soc {
   padding: 5rem 2rem;
 }
@@ -296,7 +320,9 @@ nav ul li a {
   }
 }
 
-/* 🌱 Tallers */
+/* ---------------------------
+   🌱 Tallers
+--------------------------- */
 .tallers {
   padding: 5rem 2rem;
   background: #fff;
@@ -350,7 +376,9 @@ nav ul li a {
   transform: scale(1.05);
 }
 
-/* 📩 Footer */
+/* ---------------------------
+   📩 Footer
+--------------------------- */
 footer {
   text-align: center;
   padding: 2rem 1rem;
@@ -373,3 +401,4 @@ footer .social-icons a {
 footer .social-icons a:hover {
   color: #6B8E23;
 }
+
