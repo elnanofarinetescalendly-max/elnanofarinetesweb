@@ -1,3 +1,210 @@
+/* Tipografies */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f6f1e7;
+  color: #3e2f1c;
+  line-height: 1.6;
+}
+
+/* 🔝 Navegació */
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(124, 94, 60, 0.95); /* 👈 semi transparent */
+  backdrop-filter: blur(6px);          /* 👈 efecte difuminat */
+  color: white;
+  display: flex;
+  align-items: center;  /* ✅ centra verticalment */
+  justify-content: space-between;
+  padding: 0.8rem 2rem;
+  z-index: 1000;
+}
+
+/* 📌 Esquerra */
+.nav-left {
+  display: flex;
+  align-items: center; /* ✅ centra logo + menú */
+  gap: 2rem;
+}
+
+/* Logo */
+nav .logo a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none; 
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Menú */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* 📌 Dreta */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Idiomes */
+.idioma-desktop button,
+.idioma-mobile button {
+  all: unset;
+  cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  margin: 0 0.2rem;
+}
+
+.idioma-desktop button:hover,
+.idioma-mobile button:hover {
+  background: #6B8E23;
+  border-color: #6B8E23;
+  color: #fff;
+}
+
+.idioma-desktop button.active,
+.idioma-mobile button.active {
+  background: #fff;
+  color: #7C5E3C;
+  border-color: #fff;
+}
+
+/* Botó botiga amb fletxa → */
+.btn-botiga {
+  padding: 0.5rem 1.2rem;
+  background: #4a3c2c;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.btn-botiga::after {
+  content: " →";
+  font-weight: bold;
+}
+
+.btn-botiga:hover {
+  background: #6B8E23;
+  transform: scale(1.05);
+}
+
+/* Hamburguesa (només mòbil) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  position: absolute;
+  left: 0;
+}
+.menu-toggle span:nth-child(1) { top: 0; }
+.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(3) { top: 18px; }
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}
+
+/* --- Mòbil --- */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: rgba(124, 94, 60, 0.95);
+    backdrop-filter: blur(8px);
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    min-width: 160px;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav ul li {
+    padding: 0.5rem 0;
+    text-align: left;
+  }
+
+  .idioma-desktop,
+  .botiga-desktop {
+    display: none;
+  }
+
+  .idioma-mobile,
+  .botiga-mobile {
+    display: block;
+  }
+}
+
+/* --- Desktop --- */
+@media (min-width: 769px) {
+  .idioma-mobile,
+  .botiga-mobile {
+    display: none;
+  }
+}
+
 /* 🔝 Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
