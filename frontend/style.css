@@ -48,21 +48,7 @@ nav ul li a {
   align-items: center;
   gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
 }
-/* Botó especial Botiga */
-nav .btn-botiga {
-  background: #5a4228;       /* marró més fosc */
-  color: #fff !important;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-nav .btn-botiga:hover {
-  background: #6B8E23;       /* verd oliva en hover */
-  color: #fff;
-}
+/* Botó Botiga Online */
 .btn-botiga {
   background: #7C5E3C;
   color: white;
