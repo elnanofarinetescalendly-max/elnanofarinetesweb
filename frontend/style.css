@@ -191,7 +191,7 @@ nav ul li a {
     right: 0;           /* ocupa tot l’ample */
     border-radius: 0 0 8px 8px;
     padding: 1rem;
-    min-width: 100%;
+    min-width: 50%;
     z-index: 999;       /* per sobre del contingut */
   }
 
