@@ -11,32 +11,41 @@
 
   <!-- 🔝 Navegació -->
 <nav>
-  <!-- Logo amb enllaç a l'inici -->
+  <!-- Logo -->
   <div class="logo">
     <a href="index.html">El Nano Farinetes</a>
   </div>
 
+  <!-- Menú que es plega -->
   <ul>
     <li><a href="index.html#qui-soc">Qui sóc</a></li>
     <li><a href="index.html#tallers">Tallers</a></li>
     <li><a href="Calendari.html">Calendari</a></li>
+
+    <!-- Idiomes mòbil -->
     <li class="idioma-mobile">
       <button onclick="location.href='index.html'">CA</button>
       <button onclick="location.href='index-es.html'">ES</button>
     </li>
+
+    <!-- Botiga mòbil -->
+    <li class="botiga-mobile">
+      <a href="botiga.html" class="btn-botiga">🛒 Botiga Online</a>
+    </li>
   </ul>
 
+  <!-- Dreta (desktop) -->
   <div class="nav-right">
-    <!-- Idiomes en desktop -->
+    <!-- Idiomes desktop -->
     <div class="idioma-desktop">
       <button onclick="location.href='index.html'">CA</button>
       <button onclick="location.href='index-es.html'">ES</button>
     </div>
 
-    <!-- Botiga Online -->
-    <a href="botiga.html" class="btn-botiga">Botiga Online</a>
+    <!-- Botiga desktop -->
+    <a href="botiga.html" class="btn-botiga botiga-desktop">🛒 Botiga Online</a>
 
-    <!-- Menú hamburguesa -->
+    <!-- Hamburguesa -->
     <div class="menu-toggle"><span></span><span></span><span></span></div>
   </div>
 </nav>
