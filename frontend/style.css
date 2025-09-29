@@ -28,7 +28,13 @@ nav .logo {
   font-size: 1.5rem;
   margin-right: 2rem; /* aire entre logo i menú */
 }
-
+nav .logo a {
+  color: white;              /* text blanc */
+  text-decoration: none;     /* sense subratllat */
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 nav ul {
   list-style: none;
   display: flex;
