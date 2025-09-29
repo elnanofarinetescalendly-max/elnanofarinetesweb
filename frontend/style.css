@@ -18,23 +18,27 @@ nav {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo esquerra, menú + dreta */
+  justify-content: space-between;
   padding: 1rem 2rem;
   z-index: 1000;
 }
 
-nav .logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  margin-right: 2rem; /* aire entre logo i menú */
+/* 📌 Esquerra */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
+
+/* Logo */
 nav .logo a {
-  color: white;              /* text blanc */
-  text-decoration: none;     /* sense subratllat */
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   font-weight: bold;
+  color: white;
+  text-decoration: none; /* ❌ treu el blau/subratllat */
 }
+
 nav ul {
   list-style: none;
   display: flex;
@@ -49,66 +53,143 @@ nav ul li a {
   font-weight: 500;
 }
 
+/* 📌 Dreta */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* ✨ separa idiomes i hamburguesa */
-}
-/* Botiga Online – Desktop */
-.btn-botiga {
-  background: #7C5E3C;
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  gap: 1.5rem;
 }
 
-.btn-botiga::after {
-  content: "→";
-  display: inline-block;
-  transition: transform 0.3s ease;
+/* Idiomes */
+.idioma-desktop button,
+.idioma-mobile button {
+  all: unset;
+  cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  margin: 0 0.2rem;
+}
+
+.idioma-desktop button:hover,
+.idioma-mobile button:hover {
+  background: #6B8E23;
+  border-color: #6B8E23;
+  color: #fff;
+}
+
+.idioma-desktop button.active,
+.idioma-mobile button.active {
+  background: #fff;
+  color: #7C5E3C;
+  border-color: #fff;
+}
+
+/* Botó botiga */
+.btn-botiga {
+  padding: 0.5rem 1.2rem;
+  background: #4a3c2c;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .btn-botiga:hover {
-  background: #6B4F32;
-  box-shadow: 0 6px 16px rgba(107, 142, 35, 0.6);
-  transform: translateY(-2px);
+  background: #6B8E23;
 }
 
-.btn-botiga:hover::after {
-  transform: translateX(6px);
-}
-
-/* Versió mòbil → que ocupi tot l’ample */
-.botiga-mobile {
+/* Hamburguesa (només mòbil) */
+.menu-toggle {
   display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
 }
 
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  position: absolute;
+  left: 0;
+}
+.menu-toggle span:nth-child(1) { top: 0; }
+.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(3) { top: 18px; }
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 9px;
+}
+
+/* --- Mòbil --- */
 @media (max-width: 768px) {
-  .botiga-desktop {
-    display: none; /* amaguem botiga a la dreta */
+  .menu-toggle {
+    display: flex;
   }
 
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: rgba(124, 94, 60, 0.95);
+    backdrop-filter: blur(8px);
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    min-width: 160px;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav ul li {
+    padding: 0.5rem 0;
+    text-align: left;
+  }
+
+  .idioma-desktop,
+  .botiga-desktop {
+    display: none;
+  }
+
+  .idioma-mobile,
   .botiga-mobile {
     display: block;
-    margin-top: 0.5rem;
-  }
-
-  .botiga-mobile .btn-botiga {
-    display: block;
-    text-align: center;
-    width: 100%;
-    margin-top: 0.5rem;
-    box-sizing: border-box;
   }
 }
-/* 🏞️ Hero */
+
+/* --- Desktop --- */
+@media (min-width: 769px) {
+  .idioma-mobile,
+  .botiga-mobile {
+    display: none;
+  }
+}
+
+/* Hero */
 .hero {
   background: url('https://images.pexels.com/photos/1587801/pexels-photo-1587801.jpeg') no-repeat center center/cover;
   min-height: 80vh;
@@ -273,132 +354,4 @@ footer .social-icons a {
 }
 footer .social-icons a:hover {
   color: #6B8E23;
-}
-
-/* Hamburguesa – visible només en mòbil */
-.menu-toggle {
-  display: none; /* per defecte no es mostra en desktop */
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 22px;
-  cursor: pointer;
-  position: relative;
-  z-index: 1001;
-  margin-left: 1rem;
-}
-
-.menu-toggle span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background: #fff;
-  border-radius: 2px;
-  transition: all 0.4s ease;
-  position: absolute;
-  left: 0;
-}
-.menu-toggle span:nth-child(1) { top: 0; }
-.menu-toggle span:nth-child(2) { top: 9px; }
-.menu-toggle span:nth-child(3) { top: 18px; }
-
-/* Estat actiu → X centrada */
-.menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 9px; /* 👉 es col·loca al centre */
-}
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-.menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 9px; /* 👉 també al centre */
-}
-
-/* --- Mòbil --- */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    background: rgba(124, 94, 60, 0.95);
-    backdrop-filter: blur(8px);
-    position: absolute;
-    top: 100%;
-    right: 1rem;
-    border-radius: 8px;
-    padding: 0.5rem 1rem; /* compacte */
-    min-width: 160px;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
-
-  nav ul li {
-    padding: 0.5rem 0; /* menys alçada */
-    text-align: left;
-  }
-}
-
-/* --- Navbar en scroll (PC + mòbil) --- */
-nav.scrolled {
-  background: rgba(124, 94, 60, 0.85);
-  backdrop-filter: blur(6px);
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* 🌐 Idiomes */
-.idioma-desktop {
-  display: flex;   /* visible en PC */
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.idioma-mobile {
-  display: none;   /* amagat en PC */
-}
-.idioma-desktop button,
-.idioma-mobile button {
-  all: unset; /* 🔥 elimina estil per defecte */
-  cursor: pointer;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;       /* forma de píndola */
-  border: 2px solid #fff;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
-  margin: 0 0.2rem;
-}
-
-/* Hover */
-.idioma-desktop button:hover,
-.idioma-mobile button:hover {
-  background: #6B8E23;
-  border-color: #6B8E23;
-  color: #fff;
-}
-
-/* Actiu */
-.idioma-desktop button.active,
-.idioma-mobile button.active {
-  background: #fff;
-  color: #7C5E3C;
-  border-color: #fff;
-}
-
-
-/* En mòbil */
-@media (max-width: 768px) {
-  .idioma-desktop {
-    display: none;
-  }
-  .idioma-mobile {
-    display: block;
-    text-align: left;
-  }
 }
