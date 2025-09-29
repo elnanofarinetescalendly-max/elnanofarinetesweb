@@ -8,26 +8,37 @@
 </head>
 <body>
   <!-- 🔝 Navegació -->
-  <nav>
-    <div class="logo">El Nano Farinetes</div>
-    <ul>
-      <li><a href="index.html#qui-soc">Qui sóc</a></li>
-      <li><a href="index.html#tallers">Tallers</a></li>
-      <li><a href="Calendari.html">Calendari</a></li>
-      <li><a href="botiga.html" class="btn-botiga">Botiga Online →</a></li>
-      <li class="idioma-mobile">
-        <button onclick="location.href='botiga.html'">CA</button>
-        <button onclick="location.href='botiga-es.html'">ES</button>
-      </li>
-    </ul>
-    <div class="nav-right">
-      <div class="idioma-desktop">
-        <button onclick="location.href='botiga.html'">CA</button>
-        <button onclick="location.href='botiga-es.html'">ES</button>
-      </div>
-      <div class="menu-toggle"><span></span><span></span><span></span></div>
+<nav>
+  <!-- Logo amb enllaç a l'inici -->
+  <div class="logo">
+    <a href="index.html">El Nano Farinetes</a>
+  </div>
+
+  <ul>
+    <li><a href="index.html#qui-soc">Qui sóc</a></li>
+    <li><a href="index.html#tallers">Tallers</a></li>
+    <li><a href="Calendari.html">Calendari</a></li>
+    <li class="idioma-mobile">
+      <button onclick="location.href='index.html'">CA</button>
+      <button onclick="location.href='index-es.html'">ES</button>
+    </li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- Idiomes en desktop -->
+    <div class="idioma-desktop">
+      <button onclick="location.href='index.html'">CA</button>
+      <button onclick="location.href='index-es.html'">ES</button>
     </div>
-  </nav>
+
+    <!-- Botiga Online -->
+    <a href="botiga.html" class="btn-botiga">Botiga Online</a>
+
+    <!-- Menú hamburguesa -->
+    <div class="menu-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
 
   <!-- 🛒 Hero -->
   <header class="hero hero-small">
