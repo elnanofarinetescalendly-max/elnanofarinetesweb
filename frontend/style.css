@@ -98,7 +98,7 @@ nav ul li a {
     display: block;
     text-align: center;
     width: 100%;
-    box-sizing: border-box;
+    box-sizing: 0.5rem;
   }
 }
 /* 🏞️ Hero */
