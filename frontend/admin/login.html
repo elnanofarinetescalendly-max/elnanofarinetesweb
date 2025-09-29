@@ -80,6 +80,7 @@
     </form>
     <div class="error" id="error-msg"></div>
   </div>
+
 <script>
   document.getElementById("login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -90,8 +91,7 @@
       const r = await fetch("https://elnanofarinetes-server.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        mode: "cors",                // 👈 afegit
-        credentials: "include",      // 👈 ja el tens
+        credentials: "include", // molt important per la cookie HttpOnly
         body: JSON.stringify({ email, password })
       });
 
@@ -102,8 +102,20 @@
         return;
       }
 
+      // 👉 Validar que la cookie ja està disponible
+      const me = await fetch("https://elnanofarinetes-server.onrender.com/api/auth/me", {
+        credentials: "include"
+      });
+
+      if (!me.ok) {
+        document.getElementById("error-msg").innerText = "⚠️ No s'ha pogut establir la sessió.";
+        document.getElementById("error-msg").style.display = "block";
+        return;
+      }
+
       const next = new URLSearchParams(location.search).get("next") || "/admin/dashboard.html";
       location.href = next;
+
     } catch (err) {
       console.error("Error al login:", err);
       document.getElementById("error-msg").innerText = "⚠️ Error de connexió amb el servidor";
@@ -114,4 +126,3 @@
 
 </body>
 </html>
-
