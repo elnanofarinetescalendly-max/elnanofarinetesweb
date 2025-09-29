@@ -1,162 +1,195 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestió de productes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-            nav ul li a {
-                text-decoration: none;
-                background-color: #444;
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-            }
-
-                nav ul li a:hover {
-                    background-color: #666;
-                }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-            gap: 1rem;
-        }
-
-        input, select {
-            padding: 0.5rem;
-            font-size: 1rem;
-        }
-
-        button {
-            padding: 0.5rem;
-            font-size: 1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-    </style>
-    <!-- 🚨 Script de protecció -->
+  <meta charset="UTF-8">
+  <title>Gestió de productes</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background:#f6f1e7; }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav ul li a {
+      text-decoration: none;
+      background-color: #444;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    nav ul li a:hover { background-color: #666; }
+    h1 { color:#3e2f1c; }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #7c5e3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor:pointer;
+    }
+    button:hover { background-color:#5a4129; }
+    table {
+      margin-top:1rem;
+      width:100%;
+      border-collapse: collapse;
+      background:#fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.6rem;
+      text-align: center;
+    }
+    th { background:#eae1d1; }
+    #modal-producte {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#0006;
+      align-items:center;
+      justify-content:center;
+    }
+    #form-producte {
+      background:#fff;
+      padding:1.5rem;
+      border-radius:8px;
+      min-width:320px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    }
+    #form-producte input { width:100%; margin:0.3rem 0 1rem; padding:0.5rem; }
+    .actions { display:flex; gap:0.5rem; justify-content:center; }
+    .error { color:red; margin-top:1rem; text-align:center; display:none; }
+  </style>
+  <!-- 🚨 Protecció -->
   <script defer src="guard.js"></script>
 </head>
 <body>
-    <h1>Gestió de productes</h1>
+  <h1>Gestió de productes</h1>
 
-    <nav>
-        <ul>
-            <li><a href="dashboard.html">Crear tallers</a></li>
-            <li><a href="inscrits.html">Gestió d'inscrits</a></li>
-            <li><a href="productes.html">Productes</a></li>
-        </ul>
-    </nav>
-<h2>Gestió de productes</h2>
-<div>
-  <button id="btn-refresca">Refresca</button>
-  <button id="btn-nou">Nou producte</button>
-</div>
-<table id="taula-productes" border="1" cellpadding="6" style="margin-top:1rem; width:100%">
-  <thead>
-    <tr>
-      <th>ID</th><th>Nom (CA)</th><th>Preu (€)</th><th>Stock</th><th>Actiu</th><th>Accions</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Crear tallers</a></li>
+      <li><a href="inscrits.html">Gestió d'inscrits</a></li>
+      <li><a href="productes.html">Productes</a></li>
+    </ul>
+  </nav>
 
-<div id="modal-producte" style="display:none; position:fixed; inset:0; background:#0006; align-items:center; justify-content:center;">
-  <form id="form-producte" style="background:#fff; padding:1rem; border-radius:8px; min-width:320px">
-    <h3 id="titol-modal">Nou producte</h3>
-    <input name="id" type="hidden">
-    <label>Nom (CA)<br><input name="name_ca" required></label><br><br>
-    <label>Nom (ES)<br><input name="name_es" required></label><br><br>
-    <label>Preu (€)<br><input name="price" type="number" step="0.01" required></label><br><br>
-    <label>Stock<br><input name="stock" type="number" min="0" required></label><br><br>
-    <label>Imatge URL<br><input name="image_url"></label><br><br>
-    <label><input type="checkbox" name="is_active" checked> Actiu</label><br><br>
-    <div style="text-align:right">
-      <button type="button" id="btn-cancel">Cancel·la</button>
-      <button type="submit">Desa</button>
-    </div>
-  </form>
-</div>
+  <div>
+    <button id="btn-refresca">Refresca</button>
+    <button id="btn-nou">➕ Nou producte</button>
+  </div>
 
-<script>
-const API = "https://elnanofarinetes-server.onrender.com";
-const tb = document.querySelector("#taula-productes tbody");
-const modal = document.querySelector("#modal-producte");
-const form = document.querySelector("#form-producte");
+  <table id="taula-productes">
+    <thead>
+      <tr>
+        <th>ID</th><th>Nom (CA)</th><th>Preu (€)</th><th>Stock</th><th>Actiu</th><th>Accions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div class="error" id="error-msg">⚠️ Error carregant productes</div>
 
-const obre = (data={})=>{
-  form.reset();
-  document.querySelector("#titol-modal").textContent = data.id ? "Edita producte" : "Nou producte";
-  Object.entries(data).forEach(([k,v])=>{
-    if (form[k]) form[k].value = v;
-    if (k==="is_active") form[k].checked = !!v;
-  });
-  modal.style.display="flex";
-};
-const tanca = ()=> modal.style.display="none";
-document.querySelector("#btn-cancel").onclick = tanca;
-document.querySelector("#btn-nou").onclick = ()=> obre();
+  <div id="modal-producte">
+    <form id="form-producte">
+      <h3 id="titol-modal">Nou producte</h3>
+      <input name="id" type="hidden">
+      <label>Nom (CA)<br><input name="name_ca" required></label>
+      <label>Nom (ES)<br><input name="name_es" required></label>
+      <label>Preu (€)<br><input name="price" type="number" step="0.01" required></label>
+      <label>Stock<br><input name="stock" type="number" min="0" required></label>
+      <label>Imatge URL<br><input name="image_url"></label>
+      <label><input type="checkbox" name="is_active" checked> Actiu</label>
+      <div style="text-align:right; margin-top:1rem;">
+        <button type="button" id="btn-cancel">Cancel·la</button>
+        <button type="submit">Desa</button>
+      </div>
+    </form>
+  </div>
 
-async function llista(){
-  const r = await fetch(`${API}/api/admin/products`, { credentials:"include" });
-  const data = await r.json();
-  tb.innerHTML = data.map(p=>`
-    <tr>
-      <td>${p.id}</td>
-      <td>${p.name_ca}</td>
-      <td>${(p.price_cents/100).toFixed(2)}</td>
-      <td>${p.stock}</td>
-      <td>${p.is_active ? "✅" : "❌"}</td>
-      <td>
-        <button onclick="edita(${p.id})">Edita</button>
-      </td>
-    </tr>`).join("");
-}
-async function edita(id){
-  const r = await fetch(`${API}/api/admin/products/${id}`, { credentials:"include" });
-  obre(await r.json());
-}
-form.addEventListener("submit", async e=>{
-  e.preventDefault();
-  const fd = new FormData(form);
-  const id = fd.get("id");
-  const body = {
-    name_ca: fd.get("name_ca"),
-    name_es: fd.get("name_es"),
-    price_cents: Math.round(parseFloat(fd.get("price"))*100),
-    stock: parseInt(fd.get("stock")),
-    image_url: fd.get("image_url"),
-    is_active: form.is_active.checked
+  <script>
+  const API = "https://elnanofarinetes-server.onrender.com";
+  const tb = document.querySelector("#taula-productes tbody");
+  const modal = document.querySelector("#modal-producte");
+  const form = document.querySelector("#form-producte");
+  const errorMsg = document.getElementById("error-msg");
+
+  const obre = (data={})=>{
+    form.reset();
+    document.querySelector("#titol-modal").textContent = data.id ? "Edita producte" : "Nou producte";
+    Object.entries(data).forEach(([k,v])=>{
+      if (form[k]) form[k].value = v;
+      if (k==="is_active") form[k].checked = !!v;
+    });
+    modal.style.display="flex";
   };
-  await fetch(`${API}/api/admin/products${id?"/"+id:""}`, {
-    method: id ? "PATCH" : "POST",
-    headers:{"Content-Type":"application/json"},
-    credentials:"include",
-    body: JSON.stringify(body)
+  const tanca = ()=> modal.style.display="none";
+  document.querySelector("#btn-cancel").onclick = tanca;
+  document.querySelector("#btn-nou").onclick = ()=> obre();
+  modal.addEventListener("click", e=>{ if (e.target===modal) tanca(); });
+
+  async function llista(){
+    try {
+      const r = await fetch(`${API}/api/admin/products`, { credentials:"include" });
+      if (!r.ok) throw new Error("Error carregant productes");
+      const data = await r.json();
+      tb.innerHTML = data.map(p=>`
+        <tr>
+          <td>${p.id}</td>
+          <td>${p.name_ca}</td>
+          <td>${(p.price_cents/100).toFixed(2)}</td>
+          <td>${p.stock}</td>
+          <td>${p.is_active ? "✅" : "❌"}</td>
+          <td class="actions">
+            <button onclick="edita(${p.id})">✏️</button>
+            <button onclick="elimina(${p.id})">🗑️</button>
+          </td>
+        </tr>`).join("");
+      errorMsg.style.display="none";
+    } catch(err) {
+      console.error(err);
+      errorMsg.style.display="block";
+    }
+  }
+
+  async function edita(id){
+    const r = await fetch(`${API}/api/admin/products/${id}`, { credentials:"include" });
+    obre(await r.json());
+  }
+
+  async function elimina(id){
+    if (!confirm("Segur que vols eliminar aquest producte?")) return;
+    await fetch(`${API}/api/admin/products/${id}`, { method:"DELETE", credentials:"include" });
+    llista();
+  }
+
+  form.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const fd = new FormData(form);
+    const id = fd.get("id");
+    const body = {
+      name_ca: fd.get("name_ca"),
+      name_es: fd.get("name_es"),
+      price_cents: Math.round(parseFloat(fd.get("price"))*100),
+      stock: parseInt(fd.get("stock")),
+      image_url: fd.get("image_url"),
+      is_active: form.is_active.checked
+    };
+    await fetch(`${API}/api/admin/products${id?"/"+id:""}`, {
+      method: id ? "PATCH" : "POST",
+      headers:{"Content-Type":"application/json"},
+      credentials:"include",
+      body: JSON.stringify(body)
+    });
+    tanca();
+    llista();
   });
-  tanca();
+
+  document.getElementById("btn-refresca").onclick = llista;
   llista();
-});
-llista();
-</script>
-
-  
-
+  </script>
 </body>
 </html>
+
