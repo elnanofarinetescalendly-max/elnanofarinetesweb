@@ -10,46 +10,45 @@
 <body>
 
   <!-- 🔝 Navegació -->
-<nav>
-  <!-- Logo -->
-  <div class="logo">
-    <a href="index.html">El Nano Farinetes</a>
-  </div>
+  <nav>
+    <!-- Esquerra: logo + menú -->
+    <div class="nav-left">
+      <div class="logo">
+        <a href="index.html">El Nano Farinetes</a>
+      </div>
+      <ul>
+        <li><a href="index.html#qui-soc">Qui sóc</a></li>
+        <li><a href="index.html#tallers">Tallers</a></li>
+        <li><a href="Calendari.html">Calendari</a></li>
 
-  <!-- Menú que es plega -->
-  <ul>
-    <li><a href="index.html#qui-soc">Qui sóc</a></li>
-    <li><a href="index.html#tallers">Tallers</a></li>
-    <li><a href="Calendari.html">Calendari</a></li>
+        <!-- Idiomes mòbil -->
+        <li class="idioma-mobile">
+          <button onclick="location.href='index.html'">CA</button>
+          <button onclick="location.href='index-es.html'">ES</button>
+        </li>
 
-    <!-- Idiomes mòbil -->
-    <li class="idioma-mobile">
-      <button onclick="location.href='index.html'">CA</button>
-      <button onclick="location.href='index-es.html'">ES</button>
-    </li>
-
-    <!-- Botiga mòbil -->
-    <li class="botiga-mobile">
-      <a href="botiga.html" class="btn-botiga">Botiga Online</a>
-    </li>
-  </ul>
-
-  <!-- Dreta (desktop) -->
-  <div class="nav-right">
-    <!-- Idiomes desktop -->
-    <div class="idioma-desktop">
-      <button onclick="location.href='index.html'">CA</button>
-      <button onclick="location.href='index-es.html'">ES</button>
+        <!-- Botiga mòbil -->
+        <li class="botiga-mobile">
+          <a href="botiga.html" class="btn-botiga">Botiga Online</a>
+        </li>
+      </ul>
     </div>
 
-    <!-- Botiga desktop -->
-    <a href="botiga.html" class="btn-botiga botiga-desktop">Botiga Online</a>
+    <!-- Dreta: idiomes + botiga + hamburguesa -->
+    <div class="nav-right">
+      <!-- Idiomes desktop -->
+      <div class="idioma-desktop">
+        <button onclick="location.href='index.html'">CA</button>
+        <button onclick="location.href='index-es.html'">ES</button>
+      </div>
 
-    <!-- Hamburguesa -->
-    <div class="menu-toggle"><span></span><span></span><span></span></div>
-  </div>
-</nav>
+      <!-- Botiga desktop -->
+      <a href="botiga.html" class="btn-botiga botiga-desktop">Botiga Online</a>
 
+      <!-- Hamburguesa -->
+      <div class="menu-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
 
   <!-- 🏞️ Hero -->
   <header class="hero">
@@ -89,7 +88,6 @@
       <a href="mailto:elnanofarinetes@gmail.com"><i class="fas fa-envelope"></i></a>
       <a href="/admin/login.html" style="opacity:.7;text-decoration:none;">A</a>
     </div>
-    
     <p>&copy; 2025 El Nano Farinetes</p>
   </footer>
 
