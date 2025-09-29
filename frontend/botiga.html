@@ -7,9 +7,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 🔝 Navegació -->
-<nav>
-  <!-- Logo amb enllaç a l'inici -->
+ <nav>
+  <!-- Logo amb enllaç -->
   <div class="logo">
     <a href="index.html">El Nano Farinetes</a>
   </div>
@@ -18,23 +17,34 @@
     <li><a href="index.html#qui-soc">Qui sóc</a></li>
     <li><a href="index.html#tallers">Tallers</a></li>
     <li><a href="Calendari.html">Calendari</a></li>
-    <!-- Idiomes per a mòbil -->
+    
+    <!-- Idiomes mòbil -->
     <li class="idioma-mobile">
       <button onclick="location.href='index.html'">CA</button>
       <button onclick="location.href='index-es.html'">ES</button>
     </li>
-    <!-- Botiga per a mòbil -->
+
+    <!-- Botiga mòbil -->
     <li class="botiga-mobile">
-      <a href="botiga.html" class="btn-botiga">Botiga Online</a>
+      <a href="botiga.html" class="btn-botiga">🛒 Botiga Online</a>
     </li>
   </ul>
 
   <div class="nav-right">
-    <!-- Idiomes en desktop -->
+    <!-- Idiomes desktop -->
     <div class="idioma-desktop">
       <button onclick="location.href='index.html'">CA</button>
       <button onclick="location.href='index-es.html'">ES</button>
     </div>
+
+    <!-- Botiga desktop -->
+    <a href="botiga.html" class="btn-botiga botiga-desktop">🛒 Botiga Online</a>
+
+    <!-- Menú hamburguesa -->
+    <div class="menu-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
 
     <!-- Botiga en desktop -->
     <a href="botiga.html" class="btn-botiga botiga-desktop">Botiga Online</a>
