@@ -174,20 +174,25 @@ nav ul li a {
 }
 
 /* --- Mòbil --- */
+/* --- Mòbil --- */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
   nav ul {
     display: none;
     flex-direction: column;
     background: rgba(124, 94, 60, 0.95);
     backdrop-filter: blur(8px);
     position: absolute;
-    top: 100%;          /* surt just sota la navbar */
-    right: 1rem;        /* 👉 enganxat a la dreta */
-    left: auto;         /* ❌ no fixem l'esquerra */
-    border-radius: 8px;
+    top: 100%;          /* just sota la barra */
+    left: 0;
+    right: 0;           /* ocupa tot l’ample */
+    border-radius: 0 0 8px 8px;
     padding: 1rem;
-    min-width: 200px;   /* una mica més ample perquè càpiguen els botons */
-    z-index: 2000;      /* assegura que estigui a sobre */
+    min-width: 100%;
+    z-index: 999;       /* per sobre del contingut */
   }
 
   nav ul.active {
@@ -195,8 +200,8 @@ nav ul li a {
   }
 
   nav ul li {
-    padding: 0.7rem 0;
-    text-align: left;
+    padding: 0.8rem 0;
+    text-align: center;
   }
 
   .idioma-desktop,
@@ -207,9 +212,11 @@ nav ul li a {
   .idioma-mobile,
   .botiga-mobile {
     display: block;
-    margin-top: 0.5rem;
+    text-align: center;
+    margin-top: 1rem;
   }
 }
+
 
 
 /* --- Desktop --- */
