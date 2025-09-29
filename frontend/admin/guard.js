@@ -1,6 +1,6 @@
 // admin/guard.js
 document.addEventListener("DOMContentLoaded", async () => {
-  // Evita bucle infinit si ja estàs al login
+  // 🚫 Evita bucle infinit si ja estàs al login
   if (window.location.pathname.endsWith("/admin/login.html")) return;
 
   try {
@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = await res.json();
 
-    if (user.role !== "admin") {
-      alert("No tens permisos per accedir a aquesta pàgina");
+    if (!user?.role || user.role !== "admin") {
+      alert("⚠️ No tens permisos per accedir a aquesta pàgina");
       window.location.href = "/";
       return;
     }
@@ -30,5 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = `/admin/login.html?next=${next}`;
   }
 });
+
 
 
