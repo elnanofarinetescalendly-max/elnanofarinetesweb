@@ -174,7 +174,6 @@ nav ul li a {
 }
 
 /* --- Mòbil --- */
-/* --- Mòbil --- */
 @media (max-width: 768px) {
   .menu-toggle {
     display: flex;
@@ -191,7 +190,7 @@ nav ul li a {
     right: 0;           /* ocupa tot l’ample */
     border-radius: 0 0 8px 8px;
     padding: 1rem;
-    min-width: 50%;
+    min-width: 100%;
     z-index: 999;       /* per sobre del contingut */
   }
 
