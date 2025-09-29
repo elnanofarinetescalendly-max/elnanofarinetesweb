@@ -48,12 +48,17 @@ nav ul {
   gap: 2rem;
   margin: 0;
   padding: 0;
+  align-items: center;
+  line-height: 1;
 }
 
 nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  line-height: 1;
 }
 
 /* 📌 Dreta */
